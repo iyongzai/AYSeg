@@ -1,0 +1,6 @@
+framework module Pods_AYSegDemo {
+  umbrella header "Pods-AYSegDemo-umbrella.h"
+
+  export *
+  module * { export * }
+}
