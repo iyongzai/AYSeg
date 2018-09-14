@@ -19,18 +19,18 @@ public class AYSegDefaultHeader: UIView {
         return baseContentSize
     }
     
-    private(set) var buttons = [UIButton]()
+    public private(set) var buttons = [UIButton]()
     //image's name is seg_line_v
-    private(set) var lines = [UIImageView]()
+    public private(set) var lines = [UIImageView]()
     
-    private(set) var currentIndex: Int = 0
+    public private(set) var currentIndex: Int = 0
     
-    private(set) lazy var bottomLine: UIView = {
+    public private(set) lazy var bottomLine: UIView = {
         let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 64, height: 2))
         v.backgroundColor = buttonTitleSelectedColor
         return v
     }()
-    private(set) lazy var selectedView: UIView = {
+    public private(set) lazy var selectedView: UIView = {
         let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 131, height: 32))
         v.ayCornerRadius = 16
         v.backgroundColor = "#32374F".uiColor()
@@ -43,7 +43,7 @@ public class AYSegDefaultHeader: UIView {
     private var buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)//主题深蓝
     
     
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
     }
     

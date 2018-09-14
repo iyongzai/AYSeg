@@ -88,12 +88,12 @@ final public class AYSegView: UIView, UIScrollViewDelegate {
     fileprivate var pageCount = 0
     
     /// 当前页码
-    fileprivate(set) var currentIndex: Int = 0
+    public fileprivate(set) var currentIndex: Int = 0
     fileprivate var useDefaultHeader = true
-    private(set) var defaultHeader: AYSegDefaultHeader?
+    public private(set) var defaultHeader: AYSegDefaultHeader?
     
     /// 滑动的UIScrollView
-    private(set) lazy var bodyScrollView: UIScrollView = {
+    public private(set) lazy var bodyScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
         scrollView.delegate = self
@@ -123,7 +123,7 @@ final public class AYSegView: UIView, UIScrollViewDelegate {
     /// 重写指定构造器
     ///
     /// - Parameter frame: 指定SegView的初始化frame
-    override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         
         self.setup()
