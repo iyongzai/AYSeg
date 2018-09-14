@@ -9,6 +9,13 @@
 import UIKit
 import EX
 
+
+extension UIColor {
+    static let theme = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)//主题深蓝
+    static let navBGColor = theme
+}
+
+
 private let cellReuseIdentifier = "CellReuseIdentifier"
 class ViewController: UIViewController {
 

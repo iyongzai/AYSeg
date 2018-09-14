@@ -10,25 +10,12 @@ import Foundation
 import UIKit
 import EX
 
-
-extension UIColor {
-    static let color666666      = "#666666".uiColor()
-
-    
-    
-    static let selectedBG       = "#32374F".uiColor()
-    static let theme            = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)//主题深蓝
-    static let navBGColor       = theme//顶部导航栏背景颜色
-    static let text             = "#8A98BD".uiColor()
-}
-
-
 //MARK: 构造一个Bar作为header
-typealias SegHandle = (_ index: Int) -> Void
-class AYSegDefaultHeader: UIView {
+public typealias SegHandle = (_ index: Int) -> Void
+public class AYSegDefaultHeader: UIView {
     
-    var baseContentSize: CGSize = CGSize.init(width: UIScreen.main.bounds.size.width, height: 44)
-    override var intrinsicContentSize: CGSize {
+    public var baseContentSize: CGSize = CGSize.init(width: UIScreen.main.bounds.size.width, height: 44)
+    override public var intrinsicContentSize: CGSize {
         return baseContentSize
     }
     
@@ -46,21 +33,21 @@ class AYSegDefaultHeader: UIView {
     private(set) lazy var selectedView: UIView = {
         let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 131, height: 32))
         v.ayCornerRadius = 16
-        v.backgroundColor = UIColor.selectedBG
+        v.backgroundColor = "#32374F".uiColor()
         return v
     }()
     
-    var handle: SegHandle? = nil
+    public var handle: SegHandle? = nil
     private var buttonFont: UIFont = UIFont.systemFont(ofSize: 14)
-    private var buttonTitleNormalColor: UIColor = UIColor.color666666
-    private var buttonTitleSelectedColor: UIColor = UIColor.theme
+    private var buttonTitleNormalColor: UIColor = "#666666".uiColor()
+    private var buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)//主题深蓝
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    convenience init(frame: CGRect, titles: [String], lineImageNames: [String] , handle: SegHandle?, buttonFont: UIFont = UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: UIColor = UIColor.color666666, buttonTitleSelectedColor: UIColor = UIColor.theme) {
+    public convenience init(frame: CGRect, titles: [String], lineImageNames: [String] , handle: SegHandle?, buttonFont: UIFont = UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: UIColor = "#666666".uiColor(), buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)) {
         self.init(frame: frame)
         
         self.handle = handle
@@ -135,7 +122,7 @@ class AYSegDefaultHeader: UIView {
         self.layoutIfNeeded()
     }
     
-    func updateUIDidEndScrolling(currentIndex: Int) {
+    public func updateUIDidEndScrolling(currentIndex: Int) {
         guard currentIndex != self.currentIndex else {
             return
         }
@@ -167,25 +154,25 @@ class AYSegDefaultHeader: UIView {
         
     }
     
-    func enableBottomLine(_ enable: Bool) {
+    public func enableBottomLine(_ enable: Bool) {
         self.bottomLine.isHidden = !enable
     }
-    func enableSelectView(_ enable: Bool) {
+    public func enableSelectView(_ enable: Bool) {
         self.selectedView.isHidden = !enable
     }
     
-    func updateTitles(_ titles: [String]) {
+    public func updateTitles(_ titles: [String]) {
         for i in 0..<buttons.count {
             buttons[i].setTitle(titles[i], for: .normal)
         }
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
-    @objc func buttonClicked(_ sender: UIButton) -> Void {
+    @objc public func buttonClicked(_ sender: UIButton) -> Void {
         print("buttonClicked")
         self.handle?(sender.tag)
         self.updateUIDidEndScrolling(currentIndex: sender.tag)

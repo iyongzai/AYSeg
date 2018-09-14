@@ -10,7 +10,7 @@ import UIKit
 
 
 // MARK: - 每个分页遵循AYSegPage协议。
-@objc protocol AYSegPage {
+@objc public protocol AYSegPage {
     var viewIsVisable: Bool {get set}
     var owner: UIViewController? {get set}
     var view: UIView {get set}
@@ -20,7 +20,7 @@ import UIKit
 }
 
 ////////////////////////////////////AYSegViewDelegate协议////////////////////////////////////
-@objc protocol AYSegViewDelegate: class {
+@objc public protocol AYSegViewDelegate: class {
     /// 滑动切换分页
     ///
     /// - Parameters:
@@ -35,7 +35,7 @@ import UIKit
 }
 
 ////////////////////////////////////AYSegViewDataSource协议////////////////////////////////////
-@objc protocol AYSegViewDataSource: class {
+@objc public protocol AYSegViewDataSource: class {
     /// 提供数据源--个数
     ///
     /// - Parameter segView: 传递当前的segView实例
@@ -60,7 +60,7 @@ import UIKit
 
 ////////////////////////////////////定制SegView////////////////////////////////////
 /// 定制SegView
-final class AYSegView: UIView, UIScrollViewDelegate {
+final public class AYSegView: UIView, UIScrollViewDelegate {
     
     /*
      AYSegView 父子视图关系:
@@ -75,8 +75,8 @@ final class AYSegView: UIView, UIScrollViewDelegate {
      */
     
     /// 代理委托
-    @IBOutlet weak var delegate: AYSegViewDelegate?
-    @IBOutlet weak var dataSource: AYSegViewDataSource? {
+    @IBOutlet public weak var delegate: AYSegViewDelegate?
+    @IBOutlet public weak var dataSource: AYSegViewDataSource? {
         didSet {
             if useDefaultHeader, defaultHeader == nil {
                 self.enableDefaultSegHeader()
@@ -129,7 +129,7 @@ final class AYSegView: UIView, UIScrollViewDelegate {
         self.setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         self.setup()
@@ -161,25 +161,25 @@ final class AYSegView: UIView, UIScrollViewDelegate {
 
 ////////////////////////////////////遵循UIScrollViewDelegate////////////////////////////////////
 // MARK: - UIScrollViewDelegate
-extension AYSegView {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+public extension AYSegView {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll?(scrollView)
     }
     // called when scroll view grinds to a halt
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         //print("scrollViewDidEndDecelerating")
         //当前类型页面显示高亮
         self.showCurrentKindViewHighlightedWithCurrentPage(Int(bodyScrollView.contentOffset.x/bodyScrollView.frame.size.width), previousPage: currentIndex)
     }
     
     // called when setContentOffset/scrollRectVisible:animated: finishes. not called if not animating
-    func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
+    public func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         //print("scrollViewDidEndScrollingAnimation")
         //当前类型页面显示高亮
         self.showCurrentKindViewHighlightedWithCurrentPage(Int(bodyScrollView.contentOffset.x/bodyScrollView.frame.size.width), previousPage: currentIndex)
     }
     
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         //print("scrollViewDidEndDragging")
         if (decelerate) {
             return;
@@ -190,7 +190,7 @@ extension AYSegView {
         }
     }
     
-    func scrollToPage(_ page: Int) -> Void {
+    public func scrollToPage(_ page: Int) -> Void {
         bodyScrollView.setContentOffset(CGPoint.init(x: CGFloat(page)*self.bodyScrollView.frame.size.width, y: 0), animated: true)
         self.showCurrentKindViewHighlightedWithCurrentPage(page, previousPage: currentIndex)
     }
@@ -233,9 +233,9 @@ extension AYSegView {
 
 ////////////////////////////////////外部可调用的接口////////////////////////////////////
 // MARK: - 供外部调用的接口
-extension AYSegView {
+public extension AYSegView {
     // MARK: - 重新加载所有分页
-    func reloadData() {
+    public func reloadData() {
         guard let dataSource = self.dataSource else {
             print("AYSegView的dataSource为空")
             #if DEBUG
@@ -297,7 +297,7 @@ extension AYSegView {
     }
     
     // MARK: - 设置默认header是否可用，默认可用
-    func enableDefaultSegHeader(_ enable: Bool = true) {
+    public func enableDefaultSegHeader(_ enable: Bool = true) {
         useDefaultHeader = enable
         segHeaderBG.subviews.forEach { (elem: UIView) in
             elem.removeFromSuperview()
@@ -309,7 +309,7 @@ extension AYSegView {
                     titles.append("Page\(i+1)")
                 }
             }
-            let header = AYSegDefaultHeader.init(frame: CGRect.zero, titles: titles, lineImageNames: [], handle: nil, buttonFont: UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: UIColor.text, buttonTitleSelectedColor: UIColor.white)
+            let header = AYSegDefaultHeader.init(frame: CGRect.zero, titles: titles, lineImageNames: [], handle: nil, buttonFont: UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: "#8A98BD".uiColor(), buttonTitleSelectedColor: UIColor.white)
             header.backgroundColor = UIColor.clear
             
             segHeaderBG.addSubview(header)
@@ -326,7 +326,7 @@ extension AYSegView {
         defaultHeader = segHeaderBG.subviews.first as? AYSegDefaultHeader
     }
     //MARK: - 修改所有分页高度
-    func updateContentHeight(_ height: CGFloat) {
+    public func updateContentHeight(_ height: CGFloat) {
         contentView.snp.updateConstraints { (update) in
             update.height.equalTo(height)
         }
@@ -334,7 +334,7 @@ extension AYSegView {
         self.layoutIfNeeded()
     }
     //MARK: - 横纵屏切换
-    func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         contentView.snp.updateConstraints { (make) in
             make.height.equalTo(contentView.superview!.bounds.size.height)
         }
