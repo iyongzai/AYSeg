@@ -15,7 +15,9 @@ import UIKit
     var owner: UIViewController? {get set}
     var view: UIView {get set}
     
+    func viewWillAppear(_ animated: Bool)
     func viewDidAppear(_ animated: Bool)
+    func viewWillDisappear(_ animated: Bool)
     func viewDidDisappear(_ animated: Bool)
 }
 
@@ -29,7 +31,7 @@ import UIKit
     ///   - view: 当前显示的页面
     ///   - previousView: 之前的页面
     /// - Returns: Void
-    @objc optional func scrollView(_ scrollView: UIScrollView, seg: AYSegView, viewDidappear view: UIView, previousView: UIView?) -> Void
+    @objc optional func scrollView(_ scrollView: UIScrollView, seg: AYSegView, viewDidappear currentPage: AYSegPage, previousPage: AYSegPage?) -> Void
     
     @objc optional func scrollViewDidScroll(_ scrollView: UIScrollView) -> Void
 }
@@ -91,6 +93,11 @@ final public class AYSegView: UIView, UIScrollViewDelegate {
     public fileprivate(set) var currentIndex: Int = 0
     fileprivate var useDefaultHeader = true
     public private(set) var defaultHeader: AYSegDefaultHeader?
+    public var header: UIView? {
+        get {
+            return segHeaderBG.subviews.first
+        }
+    }
     
     /// 滑动的UIScrollView
     public private(set) lazy var bodyScrollView: UIScrollView = {
@@ -209,21 +216,21 @@ public extension AYSegView {
 //        selectedButtonInSegHeader?.setTitleColor(UIColor.pink(), for: .normal)
 //        selectedButtonInSegHeader?.titleLabel?.font = UIFont.init(name: self.buttonFont.fontName, size: 15)
         
-        let previousView = contentView.subviews[previousPage]
-        let currentView = contentView.subviews[page]
-        (currentView as? UIScrollView)?.scrollsToTop = true
-        (previousView as? UIScrollView)?.scrollsToTop = false
-        delegate?.scrollView?(bodyScrollView, seg: self, viewDidappear: currentView, previousView: previousView)
+        (contentView.subviews[page] as? UIScrollView)?.scrollsToTop = true
+        (contentView.subviews[previousPage] as? UIScrollView)?.scrollsToTop = false
+        delegate?.scrollView?(bodyScrollView, seg: self, viewDidappear: dataSource!.pages[page], previousPage: dataSource!.pages[previousPage])
         if useDefaultHeader {
             defaultHeader?.updateUIDidEndScrolling(currentIndex: page)
         }
         
         if let pV = dataSource?.pages[previousPage], pV.viewIsVisable {
+            pV.viewWillDisappear(true)
             pV.viewDidDisappear(true)
             pV.viewIsVisable = false
         }
         if let v = dataSource?.pages[page], !v.viewIsVisable {
             v.viewIsVisable = true
+            v.viewWillAppear(true)
             v.viewDidAppear(true)
         }
     }
@@ -286,30 +293,31 @@ public extension AYSegView {
         }
         
         if currentIndex >= 0, currentIndex < count, delegate != nil {
-            delegate?.scrollView?(bodyScrollView, seg: self, viewDidappear: contentView.subviews[currentIndex], previousView: nil)
+            delegate?.scrollView?(bodyScrollView, seg: self, viewDidappear: dataSource.pages[currentIndex], previousPage: nil)
             if useDefaultHeader {
                 defaultHeader?.updateUIDidEndScrolling(currentIndex: currentIndex)
             }
             
             dataSource.pages[currentIndex].viewIsVisable = true
+            dataSource.pages[currentIndex].viewWillAppear(true)
             dataSource.pages[currentIndex].viewDidAppear(true)
         }
     }
     
     // MARK: - 设置默认header是否可用，默认可用
-    public func enableDefaultSegHeader(_ enable: Bool = true) {
+    public func enableDefaultSegHeader(_ enable: Bool = true, titles: [String] = []) {
         useDefaultHeader = enable
         segHeaderBG.subviews.forEach { (elem: UIView) in
             elem.removeFromSuperview()
         }
         if enable {
-            var titles: [String] = []
-            if (dataSource?.pages.count ?? 0) > 0 {
-                for i in 0..<dataSource!.pages.count {
-                    titles.append("Page\(i+1)")
+            var newTitles: [String] = titles
+            if newTitles.count < (dataSource?.pages.count ?? 0) {
+                for i in newTitles.count..<dataSource!.pages.count {
+                    newTitles.append("Page\(i+1)")
                 }
             }
-            let header = AYSegDefaultHeader.init(frame: CGRect.zero, titles: titles, lineImageNames: [], handle: nil, buttonFont: UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: "#8A98BD".uiColor(), buttonTitleSelectedColor: UIColor.white)
+            let header = AYSegDefaultHeader.init(frame: CGRect.zero, titles: newTitles, lineImageNames: [], handle: nil, buttonFont: UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: "#8A98BD".uiColor(), buttonTitleSelectedColor: UIColor.white)
             header.backgroundColor = UIColor.clear
             
             segHeaderBG.addSubview(header)
@@ -324,6 +332,23 @@ public extension AYSegView {
         segHeaderBG.layoutIfNeeded()
         
         defaultHeader = segHeaderBG.subviews.first as? AYSegDefaultHeader
+    }
+    //MARK: - 使用自定义header
+    public func setCustomHeader(_ header: UIView, height: CGFloat = 45) {
+        segHeaderBG.snp.updateConstraints { (update) in
+            update.height.equalTo(height)
+        }
+        segHeaderBG.subviews.forEach { (elem: UIView) in
+            elem.removeFromSuperview()
+        }
+        segHeaderBG.addSubview(header)
+        header.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        if defaultHeader != header {
+            defaultHeader = nil
+            useDefaultHeader = false
+        }
     }
     //MARK: - 修改所有分页高度
     public func updateContentHeight(_ height: CGFloat) {
