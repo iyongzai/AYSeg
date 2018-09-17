@@ -62,7 +62,9 @@ class DemoView: UIView, AYSegPage {
             make.edges.equalToSuperview()
         }
     }
-    
+    func viewWillAppear(_ animated: Bool) {
+        print("AYPageDemoView--viewWillAppear")
+    }
     func viewDidAppear(_ animated: Bool) {
         print("AYPageDemoView--viewDidAppear")
         
@@ -71,7 +73,9 @@ class DemoView: UIView, AYSegPage {
         }
         bezierText.show(text: showText)
     }
-    
+    func viewWillDisappear(_ animated: Bool) {
+        print("AYPageDemoView--viewWillDisappear")
+    }
     func viewDidDisappear(_ animated: Bool) {
         print("AYPageDemoView--viewDidDisappear")
     }
