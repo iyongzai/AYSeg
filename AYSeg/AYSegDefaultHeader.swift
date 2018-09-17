@@ -11,7 +11,7 @@ import UIKit
 import EX
 
 //MARK: 构造一个Bar作为header
-public typealias SegHandle = (_ index: Int) -> Void
+public typealias AYSegHandle = (_ index: Int) -> Void
 public class AYSegDefaultHeader: UIView {
     
     public var baseContentSize: CGSize = CGSize.init(width: UIScreen.main.bounds.size.width, height: 44)
@@ -37,7 +37,7 @@ public class AYSegDefaultHeader: UIView {
         return v
     }()
     
-    public var handle: SegHandle? = nil
+    public var handle: AYSegHandle? = nil
     private var buttonFont: UIFont = UIFont.systemFont(ofSize: 14)
     private var buttonTitleNormalColor: UIColor = "#666666".uiColor()
     private var buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)//主题深蓝
@@ -47,7 +47,7 @@ public class AYSegDefaultHeader: UIView {
         super.init(frame: frame)
     }
     
-    public convenience init(frame: CGRect, titles: [String], lineImageNames: [String] , handle: SegHandle?, buttonFont: UIFont = UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: UIColor = "#666666".uiColor(), buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)) {
+    public convenience init(frame: CGRect, titles: [String], lineImageNames: [String] , handle: AYSegHandle?, buttonFont: UIFont = UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: UIColor = "#666666".uiColor(), buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)) {
         self.init(frame: frame)
         
         self.handle = handle
