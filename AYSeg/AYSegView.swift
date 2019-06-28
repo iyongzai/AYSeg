@@ -168,7 +168,7 @@ final public class AYSegView: UIView, UIScrollViewDelegate {
 
 ////////////////////////////////////遵循UIScrollViewDelegate////////////////////////////////////
 // MARK: - UIScrollViewDelegate
-public extension AYSegView {
+extension AYSegView {
     public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         delegate?.scrollViewDidScroll?(scrollView)
     }
@@ -241,7 +241,7 @@ public extension AYSegView {
 
 ////////////////////////////////////外部可调用的接口////////////////////////////////////
 // MARK: - 供外部调用的接口
-public extension AYSegView {
+extension AYSegView {
     // MARK: - 重新加载所有分页
     public func reloadData() {
         guard let dataSource = self.dataSource else {
