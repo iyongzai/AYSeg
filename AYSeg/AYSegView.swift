@@ -13,7 +13,7 @@ import UIKit
 @objc public protocol AYSegPage {
     var viewIsVisable: Bool {get set}
     var owner: UIViewController? {get set}
-    var view: UIView {get set}
+    var view: UIView! {get set}
     
     func viewWillAppear(_ animated: Bool)
     func viewDidAppear(_ animated: Bool)
@@ -203,6 +203,7 @@ public extension AYSegView {
     }
     
     fileprivate func showCurrentKindViewHighlightedWithCurrentPage(_ page: Int, previousPage: Int) -> Void {
+        //var newPage = (page-1+dataSource!.pages.count)%dataSource!.pages.count
         if self.currentIndex == page {
             return
         }
@@ -265,7 +266,7 @@ public extension AYSegView {
         var tmpView: UIView!
         for i in 0..<count {
             //let aView = dataSource.viewForPage(segView: self, page: i)
-            let aView = dataSource.pages[i].view
+            let aView = dataSource.pages[i].view!
             self.contentView.addSubview(aView)
             aView.snp.makeConstraints { (make) in
                 make.top.equalToSuperview()
@@ -305,7 +306,7 @@ public extension AYSegView {
     }
     
     // MARK: - 设置默认header是否可用，默认可用
-    public func enableDefaultSegHeader(_ enable: Bool = true, titles: [String] = []) {
+    public func enableDefaultSegHeader(_ enable: Bool = true, titles: [String] = [], normalColor: UIColor = "#8A98BD".uiColor(), selectedColor: UIColor = UIColor.white) {
         useDefaultHeader = enable
         segHeaderBG.subviews.forEach { (elem: UIView) in
             elem.removeFromSuperview()
@@ -317,7 +318,7 @@ public extension AYSegView {
                     newTitles.append("Page\(i+1)")
                 }
             }
-            let header = AYSegDefaultHeader.init(frame: CGRect.zero, titles: newTitles, lineImageNames: [], handle: nil, buttonFont: UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: "#8A98BD".uiColor(), buttonTitleSelectedColor: UIColor.white)
+            let header = AYSegDefaultHeader.init(frame: CGRect.zero, titles: newTitles, lineImageNames: [], handle: nil, buttonFont: UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: normalColor, buttonTitleSelectedColor: selectedColor)
             header.backgroundColor = UIColor.clear
             
             segHeaderBG.addSubview(header)

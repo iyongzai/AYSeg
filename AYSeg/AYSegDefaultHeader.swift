@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import EX
+import SnapKit
 
 //MARK: 构造一个Bar作为header
 public typealias AYSegHandle = (_ index: Int) -> Void
@@ -136,9 +137,10 @@ public class AYSegDefaultHeader: UIView {
                 button.setTitleColor(buttonTitleNormalColor, for: .normal)
                 button.titleLabel?.font = self.buttonFont
             }
+            button.titleLabel?.adjustsFontSizeToFitWidth = true
         }
         UIView.animate(withDuration: 0.35) {
-            let textWidth = self.buttons[currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 100, height: 100), options: [], attributes: [NSAttributedStringKey.font : self.buttonFont], context: nil).size.width ?? 64
+            let textWidth = self.buttons[currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedStringKey.font : self.buttonFont], context: nil).size.width ?? 64
             self.bottomLine.snp.remakeConstraints { (make) in
                 make.bottom.equalTo(self)
                 make.size.equalTo(CGSize.init(width: textWidth, height: 2))
@@ -161,9 +163,17 @@ public class AYSegDefaultHeader: UIView {
         self.selectedView.isHidden = !enable
     }
     
-    public func updateTitles(_ titles: [String]) {
+    public func updateTitles(_ titles: [String], normalColor: UIColor = "#666666".uiColor(), selectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)) {
+        print("updateTitles")
+        buttonTitleNormalColor = normalColor
+        buttonTitleSelectedColor = selectedColor
         for i in 0..<buttons.count {
             buttons[i].setTitle(titles[i], for: .normal)
+            if i == currentIndex {
+                buttons[i].setTitleColor(selectedColor, for: .normal)
+            }else{
+                buttons[i].setTitleColor(normalColor, for: .normal)
+            }
         }
     }
     
