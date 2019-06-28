@@ -65,7 +65,6 @@ class MixViewController: UIViewController, AYSegViewDataSource, AYSegViewDelegat
     lazy var pages: [AYSegPage] = [page1, page2, page3, page4]
     
     private var segHeaderStyle = 0
-    private var gradientView: AYGradientView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,16 +90,13 @@ class MixViewController: UIViewController, AYSegViewDataSource, AYSegViewDelegat
         case 0:
             segView.defaultHeader?.enableBottomLine(true)
             segView.defaultHeader?.enableSelectView(false)
-            segView.defaultHeader?.bottomLine.backgroundColor = UIColor.white//addGradientBGThenReturnIt函数会修改背景颜色
-            gradientView?.removeFromSuperview()
+            segView.defaultHeader?.bottomLine.backgroundColor = UIColor.white
         case 1:
             segView.defaultHeader?.enableBottomLine(true)
             segView.defaultHeader?.enableSelectView(false)
-            gradientView = segView.defaultHeader?.bottomLine.addGradientBGThenReturnIt()
         case 2:
             segView.defaultHeader?.enableBottomLine(false)
             segView.defaultHeader?.enableSelectView(true)
-            gradientView?.removeFromSuperview()
         default:
             break
         }

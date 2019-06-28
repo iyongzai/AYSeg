@@ -94,7 +94,6 @@ extension VCViewController: UI {
     }
     func adjustUI() {
         self.view.backgroundColor = UIColor.theme
-        testBtn.addGradientBG()
         //bezierText.backgroundColor = UIColor.selectedBG
     }
 }
