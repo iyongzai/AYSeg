@@ -187,5 +187,35 @@ public class AYSegDefaultHeader: UIView {
         self.handle?(sender.tag)
         self.updateUIDidEndScrolling(currentIndex: sender.tag)
     }
-    
+    public func setScrollStyle(BtnContentEdgeInsets: UIEdgeInsets = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 20)) {
+        if self.viewWithTag(1314) is UIScrollView {
+            return
+        }
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        self.addSubview(scrollView)
+        scrollView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        
+        for (index, btn) in self.buttons.enumerated() {
+            btn.contentEdgeInsets = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 20)
+            scrollView.addSubview(btn)
+            btn.snp.removeConstraints()
+            btn.snp.makeConstraints { (maker) in
+                maker.top.equalTo(0)
+                maker.bottom.equalTo(0)
+                maker.height.equalTo(self.snp.height)
+                if index == 0 {
+                    maker.left.equalToSuperview()
+                }else {
+                    maker.left.equalTo(self.buttons[index-1].snp.right)
+                }
+                if index+1 == self.buttons.count{
+                    maker.right.equalTo(btn.superview!).priority(990)
+                }
+            }
+        }
+    }
 }
