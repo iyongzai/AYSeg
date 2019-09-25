@@ -115,11 +115,15 @@ extension SBDemoViewController: UI {
     func adjustUI() {
         self.navigationItem.title = "拖控件方式示例"
         self.view.backgroundColor = UIColor.theme
-        segView.defaultHeader?.updateTitles(["分页1", "分页2", "分页3", "分页4", "分页5"])
+        segView.defaultHeader?.updateTitles(["分页1", "分页2", "分页3", "分页4", "分页5"], selectedColor: UIColor.white)
     }
     func addEvents() {
         segView.defaultHeader?.handle = { [weak self] (index: Int) in
             self?.segView.scrollToPage(index)
         }
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

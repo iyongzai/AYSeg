@@ -23,6 +23,7 @@
 		2FF3F214214BD5B20018521D /* MixViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3F213214BD5B20018521D /* MixViewController.swift */; };
 		2FF3F216214BD7250018521D /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3F215214BD7250018521D /* TableViewController.swift */; };
 		5F638F1224D4672B552D77CF /* Pods_AYSegDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFBFA93436FA7546DCAA376 /* Pods_AYSegDemo.framework */; };
+		C70904CC233B63E500731266 /* NavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70904CB233B63E500731266 /* NavVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		90DEEAD4E11CFA4B5F5C041A /* Pods-AYSegDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AYSegDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-AYSegDemo/Pods-AYSegDemo.release.xcconfig"; sourceTree = "<group>"; };
 		9225799061F76F4203E7A7F1 /* Pods-AYSegDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AYSegDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AYSegDemo/Pods-AYSegDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		AFFBFA93436FA7546DCAA376 /* Pods_AYSegDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AYSegDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C70904CB233B63E500731266 /* NavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				2FF3F1F8214A70890018521D /* VCsControlViewController.swift */,
 				2FF3F211214BCA870018521D /* ViewsControlViewController.swift */,
 				2FF3F213214BD5B20018521D /* MixViewController.swift */,
+				C70904CB233B63E500731266 /* NavVC.swift */,
 				2FF3F20D214B68BB0018521D /* BezierText.swift */,
 				2FF3F1E3214A44230018521D /* Main.storyboard */,
 				2FF3F1E6214A44250018521D /* Assets.xcassets */,
@@ -258,6 +261,7 @@
 				2FF3F214214BD5B20018521D /* MixViewController.swift in Sources */,
 				2FF3F216214BD7250018521D /* TableViewController.swift in Sources */,
 				2FF3F1F7214A450E0018521D /* AYSegDefaultHeader.swift in Sources */,
+				C70904CC233B63E500731266 /* NavVC.swift in Sources */,
 				2FF3F1F5214A44730018521D /* AYSegView.swift in Sources */,
 				2FF3F1FE214B470F0018521D /* VCViewController.swift in Sources */,
 				2FF3F212214BCA870018521D /* ViewsControlViewController.swift in Sources */,

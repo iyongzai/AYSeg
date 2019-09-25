@@ -96,7 +96,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 
+//MARK: - UI
 extension ViewController: UI {
+    
     func addSubviews() {
         self.view.addSubview(tableView)
     }
@@ -112,5 +114,9 @@ extension ViewController: UI {
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.setBackground(UIColor.navBGColor)
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18), NSAttributedStringKey.foregroundColor : UIColor.white]
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

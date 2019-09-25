@@ -15,6 +15,29 @@ import SnapKit
 public typealias AYSegHandle = (_ index: Int) -> Void
 public class AYSegDefaultHeader: UIView {
     
+    public struct UIConfigure {
+        
+        public var backgroundColor = UIColor.init(hexColor: "#f9f9f9")
+        public var selectedViewBackgroundColor = "#32374F".uiColor()
+        public var buttonTitleSelectedColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)//主题深蓝
+        public var buttonTitleNormalColor: UIColor = "#666666".uiColor()
+        public var bottomLineBackgroundColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)//主题深蓝
+        
+        public var buttonNormalFont = UIFont.systemFont(ofSize: 14)
+        public var buttonSelectedFont = UIFont.systemFont(ofSize: 15)
+
+        public static func `default`() -> UIConfigure {
+            return UIConfigure()
+        }
+
+    }
+    
+    public var uiConfigure: UIConfigure = UIConfigure() {
+        didSet {
+            self.refreshUI()
+        }
+    }
+    
     public var baseContentSize: CGSize = CGSize.init(width: UIScreen.main.bounds.size.width, height: 44)
     override public var intrinsicContentSize: CGSize {
         return baseContentSize
@@ -28,35 +51,40 @@ public class AYSegDefaultHeader: UIView {
     
     public private(set) lazy var bottomLine: UIView = {
         let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 64, height: 2))
-        v.backgroundColor = buttonTitleSelectedColor
+        v.backgroundColor = self.uiConfigure.bottomLineBackgroundColor
         return v
     }()
     public private(set) lazy var selectedView: UIView = {
         let v = UIView.init(frame: CGRect.init(x: 0, y: 0, width: 131, height: 32))
         v.ayCornerRadius = 16
-        v.backgroundColor = "#32374F".uiColor()
+        v.backgroundColor = uiConfigure.selectedViewBackgroundColor
         return v
     }()
     
     public var handle: AYSegHandle? = nil
-    private var buttonFont: UIFont = UIFont.systemFont(ofSize: 14)
-    private var buttonTitleNormalColor: UIColor = "#666666".uiColor()
-    private var buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)//主题深蓝
     
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    public convenience init(frame: CGRect, titles: [String], lineImageNames: [String] , handle: AYSegHandle?, buttonFont: UIFont = UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: UIColor = "#666666".uiColor(), buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)) {
+    public convenience init(frame: CGRect,
+                            titles: [String],
+                            lineImageNames: [String] ,
+                            handle: AYSegHandle?,
+                            buttonFont: UIFont = UIFont.systemFont(ofSize: 14),
+                            buttonSelectedFont: UIFont = UIFont.systemFont(ofSize: 15),
+                            buttonTitleNormalColor: UIColor = "#666666".uiColor(),
+                            buttonTitleSelectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)) {
         self.init(frame: frame)
         
         self.handle = handle
         
-        self.backgroundColor = UIColor.init(hexColor: "#f9f9f9")
-        self.buttonFont = buttonFont
-        self.buttonTitleNormalColor = buttonTitleNormalColor
-        self.buttonTitleSelectedColor = buttonTitleSelectedColor
+        self.backgroundColor = uiConfigure.backgroundColor
+        self.uiConfigure.buttonNormalFont = buttonFont
+        self.uiConfigure.buttonSelectedFont = buttonSelectedFont
+        self.uiConfigure.buttonTitleNormalColor = buttonTitleNormalColor
+        self.uiConfigure.buttonTitleSelectedColor = buttonTitleSelectedColor
         for (index,title) in titles.enumerated() {
             let button = UIButton.init(type: .system)
             button.tintColor = buttonTitleNormalColor
@@ -106,7 +134,7 @@ public class AYSegDefaultHeader: UIView {
             }
         }
         self.addSubview(bottomLine)
-        let textWidth = self.buttons.first?.currentTitle?.boundingRect(with: CGSize.init(width: 100, height: 100), options: [], attributes: [NSAttributedStringKey.font : self.buttonFont], context: nil).size.width ?? 64
+        let textWidth = self.buttons.first?.currentTitle?.boundingRect(with: CGSize.init(width: 100, height: 100), options: [], attributes: [NSAttributedStringKey.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
         bottomLine.snp.makeConstraints { (make) in
             make.bottom.equalTo(self)
             make.size.equalTo(CGSize.init(width: textWidth, height: 2))
@@ -123,6 +151,21 @@ public class AYSegDefaultHeader: UIView {
         self.layoutIfNeeded()
     }
     
+    private func refreshUI() {
+        self.backgroundColor = uiConfigure.backgroundColor
+        self.selectedView.backgroundColor = uiConfigure.selectedViewBackgroundColor
+        
+        for i in 0..<buttons.count {
+            if i == currentIndex {
+                buttons[i].setTitleColor(uiConfigure.buttonTitleSelectedColor, for: .normal)
+                buttons[i].titleLabel?.font = uiConfigure.buttonSelectedFont
+            }else{
+                buttons[i].setTitleColor(uiConfigure.buttonTitleNormalColor, for: .normal)
+                buttons[i].titleLabel?.font = uiConfigure.buttonNormalFont
+            }
+        }
+    }
+    
     public func updateUIDidEndScrolling(currentIndex: Int) {
         guard currentIndex != self.currentIndex else {
             return
@@ -131,16 +174,16 @@ public class AYSegDefaultHeader: UIView {
         self.currentIndex = currentIndex
         for (index, button) in buttons.enumerated() {
             if index == currentIndex {
-                button.setTitleColor(buttonTitleSelectedColor, for: .normal)
-                button.titleLabel?.font = UIFont.init(name: self.buttonFont.fontName, size: buttonFont.pointSize+1)
+                button.setTitleColor(uiConfigure.buttonTitleSelectedColor, for: .normal)
+                button.titleLabel?.font = UIFont.init(name: self.uiConfigure.buttonSelectedFont.fontName, size: uiConfigure.buttonNormalFont.pointSize+1)
             }else{
-                button.setTitleColor(buttonTitleNormalColor, for: .normal)
-                button.titleLabel?.font = self.buttonFont
+                button.setTitleColor(uiConfigure.buttonTitleNormalColor, for: .normal)
+                button.titleLabel?.font = self.uiConfigure.buttonNormalFont
             }
             button.titleLabel?.adjustsFontSizeToFitWidth = true
         }
         UIView.animate(withDuration: 0.35) {
-            let textWidth = self.buttons[currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedStringKey.font : self.buttonFont], context: nil).size.width ?? 64
+            let textWidth = self.buttons[currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedStringKey.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
             self.bottomLine.snp.remakeConstraints { (make) in
                 make.bottom.equalTo(self)
                 make.size.equalTo(CGSize.init(width: textWidth, height: 2))
@@ -163,10 +206,12 @@ public class AYSegDefaultHeader: UIView {
         self.selectedView.isHidden = !enable
     }
     
-    public func updateTitles(_ titles: [String], normalColor: UIColor = "#666666".uiColor(), selectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)) {
+    public func updateTitles(_ titles: [String],
+                             normalColor: UIColor = "#666666".uiColor(),
+                             selectedColor: UIColor = UIColor.init(red: 36.0/255.0, green: 39.0/255.0, blue: 54.0/255.0, alpha: 1)) {
         print("updateTitles")
-        buttonTitleNormalColor = normalColor
-        buttonTitleSelectedColor = selectedColor
+        uiConfigure.buttonTitleNormalColor = normalColor
+        uiConfigure.buttonTitleSelectedColor = selectedColor
         for i in 0..<buttons.count {
             buttons[i].setTitle(titles[i], for: .normal)
             if i == currentIndex {
@@ -177,6 +222,10 @@ public class AYSegDefaultHeader: UIView {
         }
     }
     
+    public func updateTitles(_ titles: [String],
+                             uiConfigure: UIConfigure) {
+        self.uiConfigure = uiConfigure
+    }
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

@@ -114,6 +114,11 @@ extension ViewsControlViewController: UI {
             self?.segView.scrollToPage(index)
         }
     }
+    
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
 

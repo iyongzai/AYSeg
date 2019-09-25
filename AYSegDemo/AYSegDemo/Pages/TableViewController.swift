@@ -75,4 +75,9 @@ extension TableViewController: UI {
         tableView.backgroundColor = UIColor.clear
         tableView.tableFooterView = UIView()
     }
+    
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }

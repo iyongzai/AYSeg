@@ -96,6 +96,11 @@ extension VCViewController: UI {
         self.view.backgroundColor = UIColor.theme
         //bezierText.backgroundColor = UIColor.selectedBG
     }
+    
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
 
