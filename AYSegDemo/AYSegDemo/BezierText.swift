@@ -77,9 +77,9 @@ class BezierText: UIView, CAAnimationDelegate {
         orbit.delegate = self
         orbit.duration = duration
         orbit.path = textPath.cgPath
-        orbit.calculationMode = kCAAnimationPaced
+        orbit.calculationMode = CAAnimationCalculationMode.paced
         orbit.isRemovedOnCompletion = false
-        orbit.fillMode = kCAFillModeForwards
+        orbit.fillMode = CAMediaTimingFillMode.forwards
         penLayer.add(orbit,forKey:"position")
     }
     
@@ -96,7 +96,7 @@ class BezierText: UIView, CAAnimationDelegate {
         let fontRef:AnyObject = CTFontCreateWithName(fontName, fontPoint, nil)
         
         let attrString = NSAttributedString(string: string, attributes:
-            [kCTFontAttributeName as NSAttributedStringKey : fontRef])
+            [kCTFontAttributeName as NSAttributedString.Key : fontRef])
         let line = CTLineCreateWithAttributedString(attrString as CFAttributedString)
         let runA = CTLineGetGlyphRuns(line)
         

@@ -113,7 +113,7 @@ extension ViewController: UI {
         tableView.backgroundColor = UIColor.clear
         self.navigationController?.navigationBar.isTranslucent = false
         self.navigationController?.navigationBar.setBackground(UIColor.navBGColor)
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.font : UIFont.boldSystemFont(ofSize: 18), NSAttributedStringKey.foregroundColor : UIColor.white]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font : UIFont.boldSystemFont(ofSize: 18), NSAttributedString.Key.foregroundColor : UIColor.white]
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
