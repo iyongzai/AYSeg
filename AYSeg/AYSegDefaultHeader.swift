@@ -134,7 +134,7 @@ public class AYSegDefaultHeader: UIView {
             }
         }
         self.addSubview(bottomLine)
-        let textWidth = self.buttons.first?.currentTitle?.boundingRect(with: CGSize.init(width: 100, height: 100), options: [], attributes: [NSAttributedStringKey.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
+        let textWidth = self.buttons.first?.currentTitle?.boundingRect(with: CGSize.init(width: 100, height: 100), options: [], attributes: [NSAttributedString.Key.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
         bottomLine.snp.makeConstraints { (make) in
             make.bottom.equalTo(self)
             make.size.equalTo(CGSize.init(width: textWidth, height: 2))
@@ -183,7 +183,7 @@ public class AYSegDefaultHeader: UIView {
             button.titleLabel?.adjustsFontSizeToFitWidth = true
         }
         UIView.animate(withDuration: 0.35) {
-            let textWidth = self.buttons[currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedStringKey.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
+            let textWidth = self.buttons[currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedString.Key.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
             self.bottomLine.snp.remakeConstraints { (make) in
                 make.bottom.equalTo(self)
                 make.size.equalTo(CGSize.init(width: textWidth, height: 2))
