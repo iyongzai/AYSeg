@@ -20,7 +20,7 @@ AYSeg works on Xcode 7-11 and above, iOS 9-13 and above.
 
 Podfile文件配置：
 
-Swift 4.0  --> pod 'AYSeg', '0.0.8'
+Swift 4.0  --> pod 'AYSeg', '0.0.9'
 
 Swift 5.0 --> pod 'AYSeg', '0.5.0'
 
