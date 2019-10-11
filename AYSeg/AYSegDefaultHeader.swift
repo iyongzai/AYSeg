@@ -224,6 +224,9 @@ public class AYSegDefaultHeader: UIView {
     
     public func updateTitles(_ titles: [String],
                              uiConfigure: UIConfigure) {
+        for i in 0..<buttons.count {
+            buttons[i].setTitle(titles[i], for: .normal)
+        }
         self.uiConfigure = uiConfigure
     }
     public required init?(coder aDecoder: NSCoder) {
