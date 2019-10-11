@@ -117,6 +117,7 @@ final public class AYSegView: UIView, UIScrollViewDelegate {
         
         return v
     }()
+    private var segHeaderBGHeight: CGFloat = 45.0
         
     
     /// bodyScrollView的subView，辅助作用的view，辅助子视图自动布局加约束
@@ -149,7 +150,7 @@ final public class AYSegView: UIView, UIScrollViewDelegate {
         
         segHeaderBG.snp.makeConstraints { (make) in
             make.top.left.right.equalToSuperview()
-            make.height.equalTo(45)
+            make.height.equalTo(segHeaderBGHeight)
         }
         bodyScrollView.snp.makeConstraints { (make) in
             make.top.equalTo(segHeaderBG.snp.bottom)
@@ -328,11 +329,24 @@ extension AYSegView {
         }
         
         segHeaderBG.snp.updateConstraints { (update) in
-            update.height.equalTo(enable ? 45 : 0)
+            update.height.equalTo(enable ? segHeaderBGHeight : 0)
         }
         segHeaderBG.layoutIfNeeded()
         
         defaultHeader = segHeaderBG.subviews.first as? AYSegDefaultHeader
+    }
+    public func updateDefaultHeaderBGHeight(_ height: CGFloat) {
+        self.segHeaderBGHeight = height
+        segHeaderBG.snp.updateConstraints { (update) in
+            update.height.equalTo(height)
+        }
+        segHeaderBG.layoutIfNeeded()
+    }
+    public func updateDefualtHeaderInset(_ insets: UIEdgeInsets = UIEdgeInsets.zero) {
+        defaultHeader?.snp.updateConstraints({ (update) in
+            update.edges.equalTo(insets)
+        })
+        defaultHeader?.layoutIfNeeded()
     }
     //MARK: - 使用自定义header
     public func setCustomHeader(_ header: UIView, height: CGFloat = 45) {
