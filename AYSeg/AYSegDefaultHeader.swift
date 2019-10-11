@@ -154,6 +154,7 @@ public class AYSegDefaultHeader: UIView {
     private func refreshUI() {
         self.backgroundColor = uiConfigure.backgroundColor
         self.selectedView.backgroundColor = uiConfigure.selectedViewBackgroundColor
+        self.bottomLine.backgroundColor = uiConfigure.bottomLineBackgroundColor
         
         for i in 0..<buttons.count {
             if i == currentIndex {
