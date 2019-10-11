@@ -182,20 +182,7 @@ public class AYSegDefaultHeader: UIView {
             }
             button.titleLabel?.adjustsFontSizeToFitWidth = true
         }
-        UIView.animate(withDuration: 0.35) {
-            let textWidth = self.buttons[currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedString.Key.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
-            self.bottomLine.snp.remakeConstraints { (make) in
-                make.bottom.equalTo(self)
-                make.size.equalTo(CGSize.init(width: textWidth, height: 2))
-                make.centerX.equalTo(self.buttons[currentIndex].snp.centerX)
-            }
-            self.selectedView.snp.remakeConstraints { (make) in
-                make.size.equalTo(CGSize.init(width: textWidth+35, height: 32))
-                make.centerX.equalTo(self.buttons[currentIndex].snp.centerX)
-                make.centerY.equalTo(self.buttons[currentIndex].snp.centerY)
-            }
-            self.layoutIfNeeded()
-        }
+        self.refreshSelectedUI()
         
     }
     
@@ -220,6 +207,7 @@ public class AYSegDefaultHeader: UIView {
                 buttons[i].setTitleColor(normalColor, for: .normal)
             }
         }
+        
     }
     
     public func updateTitles(_ titles: [String],
@@ -228,6 +216,24 @@ public class AYSegDefaultHeader: UIView {
             buttons[i].setTitle(titles[i], for: .normal)
         }
         self.uiConfigure = uiConfigure
+        self.refreshSelectedUI()
+    }
+    
+    private func refreshSelectedUI() {
+        UIView.animate(withDuration: 0.35) {
+            let textWidth = self.buttons[self.currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedString.Key.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
+            self.bottomLine.snp.remakeConstraints { (make) in
+                make.bottom.equalTo(self)
+                make.size.equalTo(CGSize.init(width: textWidth, height: 2))
+                make.centerX.equalTo(self.buttons[self.currentIndex].snp.centerX)
+            }
+            self.selectedView.snp.remakeConstraints { (make) in
+                make.size.equalTo(CGSize.init(width: textWidth+35, height: 32))
+                make.centerX.equalTo(self.buttons[self.currentIndex].snp.centerX)
+                make.centerY.equalTo(self.buttons[self.currentIndex].snp.centerY)
+            }
+            self.layoutIfNeeded()
+        }
     }
     public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
