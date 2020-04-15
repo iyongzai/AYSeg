@@ -245,12 +245,25 @@ public class AYSegDefaultHeader: UIView {
         print("buttonClicked")
         self.handle?(sender.tag)
         self.updateUIDidEndScrolling(currentIndex: sender.tag)
+        
+        //处理滑动
+        guard let scrollView = self.viewWithTag(1314) as? UIScrollView else {
+            return
+        }
+        guard scrollView.contentSize.width > scrollView.frame.width else {
+            return
+        }
+        let maxOffsetX = scrollView.contentSize.width-self.frame.width
+        var nextOffsetX = (sender.frame.origin.x + sender.frame.width/2) - (self.frame.width/2)
+        nextOffsetX = min(max(nextOffsetX, 0), maxOffsetX)
+        scrollView.setContentOffset(CGPoint.init(x: nextOffsetX, y: 0), animated: true)
     }
     public func setScrollStyle(BtnContentEdgeInsets: UIEdgeInsets = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 20)) {
         if self.viewWithTag(1314) is UIScrollView {
             return
         }
         let scrollView = UIScrollView()
+        scrollView.tag = 1314
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         self.addSubview(scrollView)
