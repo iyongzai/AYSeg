@@ -69,14 +69,20 @@ public class GradientTXTButton: UIView {
             currentState = isSelected ? .selected : .normal
         }
     }
+    public var currentTitle: String? {
+        return titles[currentState]
+    }
+    public var state: GradientState {
+        return currentState
+    }
     private var currentState: GradientState = .normal {
         didSet {
             self.setNeedsLayout()
         }
     }
-    private var fonts: [GradientState : UIFont] = [:]
     private var titles: [GradientState : String] = [:]
-    private var titleColors: [GradientState : [UIColor]] = [:]
+    private var fonts = [GradientState.normal : UIFont.systemFont(ofSize: 15), GradientState.selected : UIFont.boldSystemFont(ofSize: 18)]
+    private var titleColors = [GradientState.normal : [UIColor.white, UIColor.white], GradientState.selected : [UIColor.yellow, UIColor.red]]
     
     
     public var maxWidth: CGFloat = UIScreen.main.bounds.width
@@ -99,12 +105,6 @@ public class GradientTXTButton: UIView {
     
     private func setup() {
         self.addSubview(label)
-                
-        fonts[.normal] = UIFont.systemFont(ofSize: 15)
-        fonts[.selected] = UIFont.boldSystemFont(ofSize: 18)
-        
-        titleColors[.normal] = [UIColor.white, UIColor.white]
-        titleColors[.selected] = [UIColor.yellow, UIColor.red]
         
         self.textAlignment = .center
         
@@ -136,6 +136,8 @@ public class GradientTXTButton: UIView {
     public override func layoutSubviews() {
         super.layoutSubviews()
         
+        guard self.superview != nil else { return }
+        
         gradientLayer.locations = gradientParams.locations
         gradientLayer.startPoint = gradientParams.startPoint
         gradientLayer.endPoint = gradientParams.endPoint
@@ -144,22 +146,19 @@ public class GradientTXTButton: UIView {
         label.text = titles[currentState] ?? titles[GradientState.normal]
         label.font = fonts[currentState] ?? fonts[GradientState.normal]
         
-        let textSize = ((label.text ?? "") as NSString).boundingRect(with: CGSize.init(width: maxWidth, height: 20000),
-                                                                     options: [],
-                                                                     attributes: [NSAttributedString.Key.font : label.font!],
-            context: nil).size
-        
-        self.frame.size = textSize
-        
-        label.frame = self.bounds
-        gradientLayer.frame = label.frame
+        let textRect = label.textRect(forBounds: self.bounds, limitedToNumberOfLines: 1)
+        gradientLayer.frame = CGRect.init(x: (self.bounds.width-textRect.width)/2,
+                                          y: (self.bounds.height-textRect.height)/2,
+                                          width: textRect.width,
+                                          height: textRect.height)
+        label.frame = gradientLayer.bounds
         
         self.layer.addSublayer(gradientLayer)
 
         gradientLayer.mask = label.layer
     }
     
-    public var textAlignment: NSTextAlignment = .left{
+    public var textAlignment: NSTextAlignment = .center{
         didSet{
             self.label.textAlignment = textAlignment
             setNeedsLayout()
@@ -167,27 +166,27 @@ public class GradientTXTButton: UIView {
     }
     
     
-    public func setFont(_ font: UIFont, forState state: GradientState) {
+    public func setFont(_ font: UIFont, for state: GradientState) {
         fonts[state] = font
         setNeedsLayout()
     }
-    public func font(forState state: GradientState) -> UIFont? {
+    public func font(for state: GradientState) -> UIFont? {
         return fonts[state]
     }
     
-    public func setTitle(_ title: String, forState state: GradientState) {
+    public func setTitle(_ title: String, for state: GradientState) {
         titles[state] = title
         setNeedsLayout()
     }
-    public func title(forState state: GradientState) -> String? {
+    public func title(for state: GradientState) -> String? {
         return titles[state]
     }
     
-    public func setTitleColors(_ colors: [UIColor], forState state: GradientState) {
+    public func setTitleColors(_ colors: [UIColor], for state: GradientState) {
         titleColors[state] = colors
         setNeedsLayout()
     }
-    public func titleColor(forState state: GradientState) -> [UIColor]? {
+    public func titleColor(for state: GradientState) -> [UIColor]? {
         return titleColors[state]
     }
 }

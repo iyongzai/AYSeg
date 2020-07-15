@@ -110,7 +110,7 @@ extension ViewsControlViewController: UI {
         
     }
     func addEvents() {
-        segView.defaultHeader?.handle = { [weak self] (index: Int) in
+        (segView.header as? AYSegDefaultHeader)?.handle = { [weak self] (index: Int) in
             self?.segView.scrollToPage(index)
         }
     }

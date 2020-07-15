@@ -12,8 +12,6 @@
 		2FF3F1E5214A44230018521D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF3F1E3214A44230018521D /* Main.storyboard */; };
 		2FF3F1E7214A44250018521D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2FF3F1E6214A44250018521D /* Assets.xcassets */; };
 		2FF3F1EA214A44250018521D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2FF3F1E8214A44250018521D /* LaunchScreen.storyboard */; };
-		2FF3F1F5214A44730018521D /* AYSegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3F1F3214A44730018521D /* AYSegView.swift */; };
-		2FF3F1F7214A450E0018521D /* AYSegDefaultHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3F1F6214A450E0018521D /* AYSegDefaultHeader.swift */; };
 		2FF3F1F9214A70890018521D /* VCsControlViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3F1F8214A70890018521D /* VCsControlViewController.swift */; };
 		2FF3F1FB214A71190018521D /* SBDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3F1FA214A71190018521D /* SBDemoViewController.swift */; };
 		2FF3F1FE214B470F0018521D /* VCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3F1FD214B470F0018521D /* VCViewController.swift */; };
@@ -24,10 +22,17 @@
 		2FF3F216214BD7250018521D /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF3F215214BD7250018521D /* TableViewController.swift */; };
 		5F638F1224D4672B552D77CF /* Pods_AYSegDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFFBFA93436FA7546DCAA376 /* Pods_AYSegDemo.framework */; };
 		C70904CC233B63E500731266 /* NavVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C70904CB233B63E500731266 /* NavVC.swift */; };
-		C76EF8BC24B32A2F00A6491D /* GradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76EF8BB24B32A2F00A6491D /* GradientLabel.swift */; };
-		C76EF8BE24B32B6A00A6491D /* GradientTXTButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C76EF8BD24B32B6A00A6491D /* GradientTXTButton.swift */; };
-		C7FDCBA224B34B7E00A69843 /* TestGradientTXTButtonVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBA024B34B7E00A69843 /* TestGradientTXTButtonVC.swift */; };
-		C7FDCBA324B34B7E00A69843 /* TestGradientTXTButtonVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7FDCBA124B34B7E00A69843 /* TestGradientTXTButtonVC.xib */; };
+		C7A75EC424BE9F9A00A22535 /* AYGradientTXTHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A75EC324BE9F9A00A22535 /* AYGradientTXTHeader.swift */; };
+		C7A75ECA24BEE95900A22535 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A75EC924BEE95900A22535 /* Define.swift */; };
+		C7A75ECC24BF094100A22535 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A75ECB24BF094100A22535 /* Protocols.swift */; };
+		C7A75ECE24BF11D700A22535 /* TestAYGradientSegViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A75ECD24BF11D700A22535 /* TestAYGradientSegViewVC.swift */; };
+		C7FDCBAA24B4A87D00A69843 /* AYGradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBA824B4A87D00A69843 /* AYGradientLabel.swift */; };
+		C7FDCBAB24B4A87D00A69843 /* AYGradientTitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBA924B4A87D00A69843 /* AYGradientTitleButton.swift */; };
+		C7FDCBAD24B4A90300A69843 /* AYGradientLabel-Extension-String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBAC24B4A90300A69843 /* AYGradientLabel-Extension-String.swift */; };
+		C7FDCBAF24B4A94E00A69843 /* AYGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBAE24B4A94E00A69843 /* AYGradientView.swift */; };
+		C7FDCBB124B4A96000A69843 /* GradientUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBB024B4A96000A69843 /* GradientUI.swift */; };
+		C7FDCBB424B4B89B00A69843 /* AYSegView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBB224B4B89B00A69843 /* AYSegView.swift */; };
+		C7FDCBB524B4B89B00A69843 /* AYSegDefaultHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBB324B4B89B00A69843 /* AYSegDefaultHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,8 +43,6 @@
 		2FF3F1E6214A44250018521D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2FF3F1E9214A44250018521D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2FF3F1EB214A44250018521D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2FF3F1F3214A44730018521D /* AYSegView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYSegView.swift; sourceTree = "<group>"; };
-		2FF3F1F6214A450E0018521D /* AYSegDefaultHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AYSegDefaultHeader.swift; sourceTree = "<group>"; };
 		2FF3F1F8214A70890018521D /* VCsControlViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCsControlViewController.swift; sourceTree = "<group>"; };
 		2FF3F1FA214A71190018521D /* SBDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBDemoViewController.swift; sourceTree = "<group>"; };
 		2FF3F1FD214B470F0018521D /* VCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCViewController.swift; sourceTree = "<group>"; };
@@ -52,10 +55,17 @@
 		9225799061F76F4203E7A7F1 /* Pods-AYSegDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AYSegDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AYSegDemo/Pods-AYSegDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		AFFBFA93436FA7546DCAA376 /* Pods_AYSegDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AYSegDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C70904CB233B63E500731266 /* NavVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavVC.swift; sourceTree = "<group>"; };
-		C76EF8BB24B32A2F00A6491D /* GradientLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientLabel.swift; sourceTree = "<group>"; };
-		C76EF8BD24B32B6A00A6491D /* GradientTXTButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientTXTButton.swift; sourceTree = "<group>"; };
-		C7FDCBA024B34B7E00A69843 /* TestGradientTXTButtonVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestGradientTXTButtonVC.swift; sourceTree = "<group>"; };
-		C7FDCBA124B34B7E00A69843 /* TestGradientTXTButtonVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestGradientTXTButtonVC.xib; sourceTree = "<group>"; };
+		C7A75EC324BE9F9A00A22535 /* AYGradientTXTHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AYGradientTXTHeader.swift; sourceTree = "<group>"; };
+		C7A75EC924BEE95900A22535 /* Define.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
+		C7A75ECB24BF094100A22535 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
+		C7A75ECD24BF11D700A22535 /* TestAYGradientSegViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAYGradientSegViewVC.swift; sourceTree = "<group>"; };
+		C7FDCBA824B4A87D00A69843 /* AYGradientLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYGradientLabel.swift; sourceTree = "<group>"; };
+		C7FDCBA924B4A87D00A69843 /* AYGradientTitleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYGradientTitleButton.swift; sourceTree = "<group>"; };
+		C7FDCBAC24B4A90300A69843 /* AYGradientLabel-Extension-String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AYGradientLabel-Extension-String.swift"; sourceTree = "<group>"; };
+		C7FDCBAE24B4A94E00A69843 /* AYGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYGradientView.swift; sourceTree = "<group>"; };
+		C7FDCBB024B4A96000A69843 /* GradientUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientUI.swift; sourceTree = "<group>"; };
+		C7FDCBB224B4B89B00A69843 /* AYSegView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYSegView.swift; sourceTree = "<group>"; };
+		C7FDCBB324B4B89B00A69843 /* AYSegDefaultHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYSegDefaultHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,8 +109,7 @@
 				2FF3F1F8214A70890018521D /* VCsControlViewController.swift */,
 				2FF3F211214BCA870018521D /* ViewsControlViewController.swift */,
 				2FF3F213214BD5B20018521D /* MixViewController.swift */,
-				C7FDCBA024B34B7E00A69843 /* TestGradientTXTButtonVC.swift */,
-				C7FDCBA124B34B7E00A69843 /* TestGradientTXTButtonVC.xib */,
+				C7A75ECD24BF11D700A22535 /* TestAYGradientSegViewVC.swift */,
 				C70904CB233B63E500731266 /* NavVC.swift */,
 				2FF3F20D214B68BB0018521D /* BezierText.swift */,
 				2FF3F1E3214A44230018521D /* Main.storyboard */,
@@ -114,10 +123,16 @@
 		2FF3F1F1214A44730018521D /* AYSeg */ = {
 			isa = PBXGroup;
 			children = (
-				2FF3F1F3214A44730018521D /* AYSegView.swift */,
-				2FF3F1F6214A450E0018521D /* AYSegDefaultHeader.swift */,
-				C76EF8BB24B32A2F00A6491D /* GradientLabel.swift */,
-				C76EF8BD24B32B6A00A6491D /* GradientTXTButton.swift */,
+				C7A75ECB24BF094100A22535 /* Protocols.swift */,
+				C7FDCBB224B4B89B00A69843 /* AYSegView.swift */,
+				C7FDCBB324B4B89B00A69843 /* AYSegDefaultHeader.swift */,
+				C7FDCBA824B4A87D00A69843 /* AYGradientLabel.swift */,
+				C7FDCBAC24B4A90300A69843 /* AYGradientLabel-Extension-String.swift */,
+				C7FDCBA924B4A87D00A69843 /* AYGradientTitleButton.swift */,
+				C7FDCBAE24B4A94E00A69843 /* AYGradientView.swift */,
+				C7FDCBB024B4A96000A69843 /* GradientUI.swift */,
+				C7A75EC324BE9F9A00A22535 /* AYGradientTXTHeader.swift */,
+				C7A75EC924BEE95900A22535 /* Define.swift */,
 			);
 			name = AYSeg;
 			path = ../AYSeg;
@@ -210,7 +225,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7FDCBA324B34B7E00A69843 /* TestGradientTXTButtonVC.xib in Resources */,
 				2FF3F1EA214A44250018521D /* LaunchScreen.storyboard in Resources */,
 				2FF3F1E7214A44250018521D /* Assets.xcassets in Resources */,
 				2FF3F1E5214A44230018521D /* Main.storyboard in Resources */,
@@ -262,21 +276,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7FDCBA224B34B7E00A69843 /* TestGradientTXTButtonVC.swift in Sources */,
+				C7A75EC424BE9F9A00A22535 /* AYGradientTXTHeader.swift in Sources */,
+				C7FDCBB524B4B89B00A69843 /* AYSegDefaultHeader.swift in Sources */,
+				C7FDCBB124B4A96000A69843 /* GradientUI.swift in Sources */,
+				C7A75ECE24BF11D700A22535 /* TestAYGradientSegViewVC.swift in Sources */,
+				C7A75ECC24BF094100A22535 /* Protocols.swift in Sources */,
+				C7FDCBAD24B4A90300A69843 /* AYGradientLabel-Extension-String.swift in Sources */,
 				2FF3F206214B475F0018521D /* DemoView.swift in Sources */,
 				2FF3F1FB214A71190018521D /* SBDemoViewController.swift in Sources */,
 				2FF3F1F9214A70890018521D /* VCsControlViewController.swift in Sources */,
 				2FF3F20E214B68BB0018521D /* BezierText.swift in Sources */,
+				C7A75ECA24BEE95900A22535 /* Define.swift in Sources */,
 				2FF3F1E2214A44230018521D /* ViewController.swift in Sources */,
 				2FF3F1E0214A44230018521D /* AppDelegate.swift in Sources */,
 				2FF3F214214BD5B20018521D /* MixViewController.swift in Sources */,
+				C7FDCBB424B4B89B00A69843 /* AYSegView.swift in Sources */,
+				C7FDCBAF24B4A94E00A69843 /* AYGradientView.swift in Sources */,
+				C7FDCBAA24B4A87D00A69843 /* AYGradientLabel.swift in Sources */,
 				2FF3F216214BD7250018521D /* TableViewController.swift in Sources */,
-				C76EF8BE24B32B6A00A6491D /* GradientTXTButton.swift in Sources */,
-				2FF3F1F7214A450E0018521D /* AYSegDefaultHeader.swift in Sources */,
 				C70904CC233B63E500731266 /* NavVC.swift in Sources */,
-				2FF3F1F5214A44730018521D /* AYSegView.swift in Sources */,
 				2FF3F1FE214B470F0018521D /* VCViewController.swift in Sources */,
-				C76EF8BC24B32A2F00A6491D /* GradientLabel.swift in Sources */,
+				C7FDCBAB24B4A87D00A69843 /* AYGradientTitleButton.swift in Sources */,
 				2FF3F212214BCA870018521D /* ViewsControlViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

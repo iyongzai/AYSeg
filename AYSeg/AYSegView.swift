@@ -8,58 +8,6 @@
 
 import UIKit
 
-
-// MARK: - 每个分页遵循AYSegPage协议。
-@objc public protocol AYSegPage {
-    var viewIsVisable: Bool {get set}
-    var owner: UIViewController? {get set}
-    var view: UIView! {get set}
-    
-    func viewWillAppear(_ animated: Bool)
-    func viewDidAppear(_ animated: Bool)
-    func viewWillDisappear(_ animated: Bool)
-    func viewDidDisappear(_ animated: Bool)
-}
-
-////////////////////////////////////AYSegViewDelegate协议////////////////////////////////////
-@objc public protocol AYSegViewDelegate: class {
-    /// 滑动切换分页
-    ///
-    /// - Parameters:
-    ///   - scrollView: bodyScrollView
-    ///   - seg: 当前SegView实例
-    ///   - view: 当前显示的页面
-    ///   - previousView: 之前的页面
-    /// - Returns: Void
-    @objc optional func scrollView(_ scrollView: UIScrollView, seg: AYSegView, viewDidappear currentPage: AYSegPage, previousPage: AYSegPage?) -> Void
-    
-    @objc optional func scrollViewDidScroll(_ scrollView: UIScrollView) -> Void
-}
-
-////////////////////////////////////AYSegViewDataSource协议////////////////////////////////////
-@objc public protocol AYSegViewDataSource: class {
-    /// 提供数据源--个数
-    ///
-    /// - Parameter segView: 传递当前的segView实例
-    /// - Returns: 提供需要展现的个数
-    //func numberOfPage(segView: AYSegView) -> Int
-    
-    //上面的方法废弃，采用下面的方式
-    var pages: [AYSegPage] {get set}
-
-    
-    
-    /// 提供数据源--显示的View
-    ///
-    /// - Parameters:
-    ///   - segView: 传递当前的segView实例
-    ///   - page: 当前的页码
-    /// - Returns: 提供当前页码需要展现的View
-    //func viewForPage(segView: AYSegView, page: Int) -> AYSegPage
-}
-
-
-
 ////////////////////////////////////定制SegView////////////////////////////////////
 /// 定制SegView
 final public class AYSegView: UIView, UIScrollViewDelegate {
@@ -80,7 +28,7 @@ final public class AYSegView: UIView, UIScrollViewDelegate {
     @IBOutlet public weak var delegate: AYSegViewDelegate?
     @IBOutlet public weak var dataSource: AYSegViewDataSource? {
         didSet {
-            if useDefaultHeader, defaultHeader == nil {
+            if header == nil {
                 self.enableDefaultSegHeader()
             }
         }
@@ -91,13 +39,7 @@ final public class AYSegView: UIView, UIScrollViewDelegate {
     
     /// 当前页码
     public fileprivate(set) var currentIndex: Int = 0
-    fileprivate var useDefaultHeader = true
-    public private(set) var defaultHeader: AYSegDefaultHeader?
-    public var header: UIView? {
-        get {
-            return segHeaderBG.subviews.first
-        }
-    }
+    public private(set) var header: AYSegHeader?
     
     /// 滑动的UIScrollView
     public private(set) lazy var bodyScrollView: UIScrollView = {
@@ -221,9 +163,7 @@ extension AYSegView {
         (contentView.subviews[page] as? UIScrollView)?.scrollsToTop = true
         (contentView.subviews[previousPage] as? UIScrollView)?.scrollsToTop = false
         delegate?.scrollView?(bodyScrollView, seg: self, viewDidappear: dataSource!.pages[page], previousPage: dataSource!.pages[previousPage])
-        if useDefaultHeader {
-            defaultHeader?.updateUIDidEndScrolling(currentIndex: page)
-        }
+        header?.updateUIDidEndScrolling(currentIndex: page)
         
         if let pV = dataSource?.pages[previousPage], pV.viewIsVisable {
             pV.viewWillDisappear(true)
@@ -296,9 +236,7 @@ extension AYSegView {
         
         if currentIndex >= 0, currentIndex < count, delegate != nil {
             delegate?.scrollView?(bodyScrollView, seg: self, viewDidappear: dataSource.pages[currentIndex], previousPage: nil)
-            if useDefaultHeader {
-                defaultHeader?.updateUIDidEndScrolling(currentIndex: currentIndex)
-            }
+            header?.updateUIDidEndScrolling(currentIndex: currentIndex)
             
             dataSource.pages[currentIndex].viewIsVisable = true
             dataSource.pages[currentIndex].viewWillAppear(true)
@@ -308,7 +246,6 @@ extension AYSegView {
     
     // MARK: - 设置默认header是否可用，默认可用
     public func enableDefaultSegHeader(_ enable: Bool = true, titles: [String] = [], normalColor: UIColor = "#8A98BD".uiColor(), selectedColor: UIColor = UIColor.white) {
-        useDefaultHeader = enable
         segHeaderBG.subviews.forEach { (elem: UIView) in
             elem.removeFromSuperview()
         }
@@ -326,6 +263,8 @@ extension AYSegView {
             header.snp.makeConstraints { (make) in
                 make.edges.equalToSuperview()
             }
+        }else{
+            header?.removeFromSuperview()
         }
         
         segHeaderBG.snp.updateConstraints { (update) in
@@ -333,9 +272,9 @@ extension AYSegView {
         }
         segHeaderBG.layoutIfNeeded()
         
-        defaultHeader = segHeaderBG.subviews.first as? AYSegDefaultHeader
+        header = segHeaderBG.subviews.first as? AYSegHeader
     }
-    public func updateDefaultHeaderBGHeight(_ height: CGFloat) {
+    public func updateheaderBGHeight(_ height: CGFloat) {
         self.segHeaderBGHeight = height
         segHeaderBG.snp.updateConstraints { (update) in
             update.height.equalTo(height)
@@ -343,13 +282,13 @@ extension AYSegView {
         segHeaderBG.layoutIfNeeded()
     }
     public func updateDefualtHeaderInset(_ insets: UIEdgeInsets = UIEdgeInsets.zero) {
-        defaultHeader?.snp.updateConstraints({ (update) in
+        header?.snp.updateConstraints({ (update) in
             update.edges.equalTo(insets)
         })
-        defaultHeader?.layoutIfNeeded()
+        header?.layoutIfNeeded()
     }
     //MARK: - 使用自定义header
-    public func setCustomHeader(_ header: UIView, height: CGFloat = 45) {
+    public func setCustomHeader(_ header: AYSegHeader, height: CGFloat = 45) {
         segHeaderBG.snp.updateConstraints { (update) in
             update.height.equalTo(height)
         }
@@ -360,10 +299,7 @@ extension AYSegView {
         header.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
-        if defaultHeader != header {
-            defaultHeader = nil
-            useDefaultHeader = false
-        }
+        self.header = header
     }
     //MARK: - 修改所有分页高度
     public func updateContentHeight(_ height: CGFloat) {

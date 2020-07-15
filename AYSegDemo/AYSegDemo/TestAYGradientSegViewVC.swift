@@ -1,15 +1,37 @@
 //
-//  VCsControlViewController.swift
+//  TestAYGradientSegViewVC.swift
 //  AYSegDemo
 //
-//  Created by Tyler.Yin on 2018/9/13.
-//  Copyright © 2018年 ayong. All rights reserved.
+//  Created by zhiyong yin on 2020/7/15.
+//  Copyright © 2020 ayong. All rights reserved.
 //
+
+
+//import UIKit
+//
+//class TestAYGradientSegViewVC: UIViewController {
+//
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//
+//        // Do any additional setup after loading the view.
+//        self.view.backgroundColor = UIColor.theme
+//
+//        let gradientSegView = AYGradientTXTHeader()
+//        self.view.addSubview(gradientSegView)
+//        gradientSegView.snp.makeConstraints { (make) in
+//            make.top.equalToSuperview().offset(100)
+//            make.left.equalToSuperview()
+//            make.size.equalTo(CGSize.init(width: UIScreen.main.bounds.width, height: 40))
+//        }
+//    }
+//
+//}
 
 import UIKit
 import EX
 
-class VCsControlViewController: UIViewController, AYSegViewDataSource, AYSegViewDelegate {
+class TestAYGradientSegViewVC: UIViewController, AYSegViewDataSource, AYSegViewDelegate {
     
     /*
      使用说明(很简单)：
@@ -30,6 +52,27 @@ class VCsControlViewController: UIViewController, AYSegViewDataSource, AYSegView
         segView.dataSource = self
         
         return segView
+    }()
+    
+    private lazy var segHeader: AYGradientTXTHeader = {
+        let titles = ["法币账户", "币币账户", "合约账户"]
+        let normalFont = UIFont.init(name: pingFangRegular, size: 15)!
+        let selectedFont = UIFont.init(name: pingFangRegular, size: 25)!
+        
+        let normalGradientParams = GradientParams.init(colors: ["#BEBEB0".uiColor(), "#BEBEB0".uiColor()])
+        let selectedGradientParams = GradientParams.init(colors: ["#FDEA5D".uiColor(), "#F6921E".uiColor()])
+        
+        var normalItems: [AYGradientLabelConf] = []
+        var selectedItems: [AYGradientLabelConf] = []
+        titles.forEach { (title) in
+            let normalItem = AYGradientLabelConf.init(text: title, font: normalFont, gradientParams: normalGradientParams)
+            let selectedItem = AYGradientLabelConf.init(text: title, font: selectedFont, gradientParams: selectedGradientParams)
+            normalItems.append(normalItem)
+            selectedItems.append(selectedItem)
+        }
+        let header = AYGradientTXTHeader.init(items: normalItems, selectedItems: selectedItems)
+        
+        return header
     }()
     
     //step2：遵循AYSegViewDelegate和AYSegViewDataSource协议，实现AYSegViewDataSource协议，提供数据源
@@ -54,15 +97,9 @@ class VCsControlViewController: UIViewController, AYSegViewDataSource, AYSegView
         
         return page
     }()
-    private lazy var page4: VCViewController = {
-        let page = VCViewController()
-        page.showText = "VCViewController4"
-        page.btnTitle = "Test button 4"
-        
-        return page
-    }()
     
-    lazy var pages: [AYSegPage] = [page1, page2, page3, page4]
+    
+    lazy var pages: [AYSegPage] = [page1, page2, page3]
     
     
     override func viewDidLoad() {
@@ -80,6 +117,7 @@ class VCsControlViewController: UIViewController, AYSegViewDataSource, AYSegView
         
         //step3：viewDidAppear方法里面调用segView.reloadData()
         segView.reloadData()
+        segView.setCustomHeader(segHeader, height: 60)
     }
 
     override func didReceiveMemoryWarning() {
@@ -91,7 +129,7 @@ class VCsControlViewController: UIViewController, AYSegViewDataSource, AYSegView
 
 
 
-extension VCsControlViewController: UI {
+extension TestAYGradientSegViewVC: UI {
     func addSubviews() {
         self.view.addSubview(segView)
     }
@@ -118,7 +156,7 @@ extension VCsControlViewController: UI {
 }
 
 
-extension VCsControlViewController {
+extension TestAYGradientSegViewVC {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         pages.forEach { (page: AYSegPage) in

@@ -88,15 +88,15 @@ class MixViewController: UIViewController, AYSegViewDataSource, AYSegViewDelegat
         segHeaderStyle = (segHeaderStyle+1)%3
         switch segHeaderStyle {
         case 0:
-            segView.defaultHeader?.enableBottomLine(true)
-            segView.defaultHeader?.enableSelectView(false)
-            segView.defaultHeader?.bottomLine.backgroundColor = UIColor.white
+            (segView.header as? AYSegDefaultHeader)?.enableBottomLine(true)
+            (segView.header as? AYSegDefaultHeader)?.enableSelectView(false)
+            (segView.header as? AYSegDefaultHeader)?.bottomLine.backgroundColor = UIColor.white
         case 1:
-            segView.defaultHeader?.enableBottomLine(true)
-            segView.defaultHeader?.enableSelectView(false)
+            (segView.header as? AYSegDefaultHeader)?.enableBottomLine(true)
+            (segView.header as? AYSegDefaultHeader)?.enableSelectView(false)
         case 2:
-            segView.defaultHeader?.enableBottomLine(false)
-            segView.defaultHeader?.enableSelectView(true)
+            (segView.header as? AYSegDefaultHeader)?.enableBottomLine(false)
+            (segView.header as? AYSegDefaultHeader)?.enableSelectView(true)
         default:
             break
         }
@@ -125,10 +125,10 @@ extension MixViewController: UI {
         self.navigationItem.title = "所有分页用VC控制"
         self.view.backgroundColor = UIColor.theme
         
-        segView.defaultHeader?.updateTitles(["分页1", "分页2", "分页3", "分页4", "分页5"], selectedColor: UIColor.white)
+        (segView.header as? AYSegDefaultHeader)?.updateTitles(["分页1", "分页2", "分页3", "分页4", "分页5"], selectedColor: UIColor.white)
     }
     func addEvents() {
-        segView.defaultHeader?.handle = { [weak self] (index: Int) in
+        (segView.header as? AYSegDefaultHeader)?.handle = { [weak self] (index: Int) in
             self?.segView.scrollToPage(index)
         }
     }
