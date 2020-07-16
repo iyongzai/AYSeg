@@ -48,6 +48,17 @@ public struct GradientParams {
     public var endPoint: CGPoint = CGPoint(x: 0.5, y: 1)
     public var colors: [UIColor] = [UIColor(red: 0.99, green: 0.92, blue: 0.36, alpha: 1), UIColor(red: 0.96, green: 0.57, blue: 0.12, alpha: 1)]
     
+    public init(locations: [NSNumber]? = [0, 1],
+         startPoint: CGPoint = CGPoint(x: 0.5, y: 0),
+         endPoint: CGPoint = CGPoint(x: 0.5, y: 1),
+         colors: [UIColor] = [UIColor(red: 0.99, green: 0.92, blue: 0.36, alpha: 1),
+                              UIColor(red: 0.96, green: 0.57, blue: 0.12, alpha: 1)]) {
+        self.locations = locations
+        self.startPoint = startPoint
+        self.endPoint = endPoint
+        self.colors = colors
+    }
+    
     public mutating func setLocations(_ locations: [NSNumber]?) -> GradientParams {
         self.locations = locations
         return self

@@ -44,9 +44,17 @@ public class AYGradientTitleButton: UIButton {
     }()
     public var showBottomLine = true {
         didSet {
-            self.setNeedsDisplay()
+            bottomLine.isHidden = !showBottomLine
         }
     }
+    public var showBottomLineReferenceSelectedState = true {
+        didSet {
+            if showBottomLineReferenceSelectedState {
+                showBottomLine = self.isSelected
+            }
+        }
+    }
+    
     public var gradientBottomLineParams = GradientParams() {
         didSet {
             self.setNeedsDisplay()
@@ -54,48 +62,54 @@ public class AYGradientTitleButton: UIButton {
     }
     
     public override func draw(_ rect: CGRect) {
-        super.setTitleColor(isGradientTitle ? UIColor.clear : titleColors[state]!, for: state)
-        super.titleLabel?.font = fonts[state] ?? fonts[.normal]
-        super.draw(rect)
-        
-        // 渐变标题处理
-        gradientLabel.text = self.titleLabel?.text
-        gradientLabel.font = self.titleLabel?.font
-//        gradientLabel.textAlignment
-        let gradientContentSize = gradientLabel.gradientContentSize
-        
-        if gradientLabel.superview == nil {
-            self.addSubview(gradientLabel)
+            super.setTitleColor(isGradientTitle ? UIColor.clear : titleColors[state] ?? titleColors[.normal] ?? nil, for: state)
+            super.titleLabel?.font = fonts[state] ?? fonts[.normal]
+            super.draw(rect)
+            
+            // 渐变标题处理
+            gradientLabel.text = self.titleLabel?.text
+            gradientLabel.font = self.titleLabel?.font
+    //        gradientLabel.textAlignment
+            let gradientContentSize = gradientLabel.gradientContentSize
+            
+            if gradientLabel.superview == nil {
+                self.addSubview(gradientLabel)
+            }
+            if isGradientTitle {
+                gradientLabel.gradientParams = gradientTitleParamsArray[state] ?? gradientTitleParamsArray[.normal] ?? GradientParams()
+            }else{
+                var newParams = GradientParams()
+                let titleColor = self.titleColor(for: state) ?? self.titleColor(for: .normal) ?? UIColor.darkText
+                newParams.colors = [titleColor, titleColor]
+                gradientLabel.gradientParams = newParams
+            }
+            gradientLabel.frame = self.bounds
+            gradientLabel.frame = CGRect.init(x: (self.bounds.width-gradientContentSize.width)/2,
+                                              y: (self.bounds.height-gradientLabel.font!.pointSize)/2,
+                                              width: gradientContentSize.width,
+                                              height: gradientLabel.font!.pointSize)
+            
+            // 底部线条处理
+            if bottomLine.superview == nil {
+                self.addSubview(bottomLine)
+                if showBottomLineReferenceSelectedState {
+                    showBottomLine = self.isSelected
+                }
+            }
+            bottomLine.isHidden = !showBottomLine
+            bottomLine.frame = CGRect.init(x: (self.bounds.width-gradientContentSize.width)/2,
+                                           y: self.bounds.height/2+gradientLabel.font!.pointSize/2+4,
+                                           width: gradientContentSize.width,
+                                           height: 1)
+            bottomLine.gradientParams = gradientBottomLineParams
         }
-        if isGradientTitle {
-            gradientLabel.gradientParams = gradientTitleParamsArray[state] ?? gradientTitleParamsArray[.normal] ?? GradientParams()
-        }else{
-            var newParams = GradientParams()
-            let titleColor = self.titleColor(for: state) ?? self.titleColor(for: .normal) ?? UIColor.darkText
-            newParams.colors = [titleColor, titleColor]
-            gradientLabel.gradientParams = newParams
-        }
-        gradientLabel.frame = self.bounds
-        gradientLabel.frame = CGRect.init(x: (self.bounds.width-gradientContentSize.width)/2,
-                                          y: (self.bounds.height-gradientLabel.font!.pointSize)/2,
-                                          width: gradientContentSize.width,
-                                          height: gradientLabel.font!.pointSize)
-        
-        // 底部线条处理
-        if bottomLine.superview == nil {
-            self.addSubview(bottomLine)
-        }
-        bottomLine.isHidden = showBottomLine
-        bottomLine.frame = CGRect.init(x: (self.bounds.width-gradientContentSize.width)/2,
-                                       y: self.bounds.height/2+gradientLabel.font!.pointSize/2+4,
-                                       width: gradientContentSize.width,
-                                       height: 1)
-        bottomLine.gradientParams = gradientBottomLineParams
-    }
     
     public override var isSelected: Bool {
         set {
             super.isSelected = newValue
+            if showBottomLineReferenceSelectedState {
+                showBottomLine = newValue
+            }
             self.setNeedsDisplay()
         }
         get {

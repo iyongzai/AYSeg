@@ -48,7 +48,7 @@ public class AYGradientLabel: UILabel {
         let maskLayer = CAShapeLayer()
         // The path is upside down (CG coordinate system)
         // 第一种处理方法，layer翻转
-        maskLayer.isGeometryFlipped = true
+        //maskLayer.isGeometryFlipped = true
         // 第二种方法，转换坐标轴
         //bezier.apply(CGAffineTransform.init(scaleX: 1.0, y: -1.0))
         //bezier.apply(CGAffineTransform.init(translationX: 0.0, y: bezier.cgPath.boundingBoxOfPath.size.height))

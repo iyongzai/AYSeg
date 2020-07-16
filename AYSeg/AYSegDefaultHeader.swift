@@ -1,5 +1,5 @@
 //
-//  AYSegheader.swift
+//  AYSegDefaultHeader.swift
 //  AYSegDemo
 //
 //  Created by Tyler.Yin on 2018/9/13.
@@ -13,7 +13,7 @@ import SnapKit
 
 //MARK: 构造一个Bar作为header
 public typealias AYSegHandle = (_ index: Int) -> Void
-public class AYSegDefaultHeader: UIView {
+public class AYSegDefaultHeader: UIView, AYSegHeader {
     
     public struct UIConfigure {
         
