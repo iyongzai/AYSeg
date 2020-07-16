@@ -56,8 +56,8 @@ class TestAYGradientSegViewVC: UIViewController, AYSegViewDataSource, AYSegViewD
     
     private lazy var segHeader: AYGradientTXTHeader = {
         let titles = ["法币账户", "币币账户", "合约账户"]
-        let normalFont = UIFont.init(name: pingFangRegular, size: 15)!
-        let selectedFont = UIFont.init(name: pingFangRegular, size: 25)!
+        let normalFont = UIFont.init(name: kPingFangRegular, size: 15)!
+        let selectedFont = UIFont.init(name: kPingFangRegular, size: 25)!
         
         let normalGradientParams = GradientParams.init(colors: ["#BEBEB0".uiColor(), "#BEBEB0".uiColor()])
         let selectedGradientParams = GradientParams.init(colors: ["#FDEA5D".uiColor(), "#F6921E".uiColor()])

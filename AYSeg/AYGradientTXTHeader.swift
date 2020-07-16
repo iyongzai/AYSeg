@@ -9,10 +9,19 @@
 import UIKit
 
 public struct AYGradientLabelConf {
-    var text: String? = "我的分类"
-    var font = UIFont.init(name: pingFangRegular, size: 15)!
+    public var text: String? = "我的分类"
+    public var font = UIFont.init(name: kPingFangRegular, size: 15)!
     
-    var gradientParams: GradientParams? = GradientParams()
+    public var gradientParams: GradientParams? = GradientParams()
+    
+    public init(text: String? = "我的分类",
+                font: UIFont = UIFont.init(name: kPingFangRegular, size: 15)!,
+                gradientParams: GradientParams? = GradientParams()) {
+        self.text = text
+        self.font = font
+        self.gradientParams = gradientParams
+    }
+    
 }
 
 public class AYGradientTXTHeader: UIView, AYSegHeader {
@@ -20,9 +29,9 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
     
     public private(set) var currentIndex = 0
     private var normalItems = [AYGradientLabelConf(), AYGradientLabelConf(), AYGradientLabelConf()]
-    private var selectedItems = [AYGradientLabelConf.init(font: UIFont.init(name: pingFangRegular, size: 25)!),
-                                 AYGradientLabelConf.init(font: UIFont.init(name: pingFangRegular, size: 25)!),
-                                 AYGradientLabelConf.init(font: UIFont.init(name: pingFangRegular, size: 25)!)]
+    private var selectedItems = [AYGradientLabelConf.init(font: UIFont.init(name: kPingFangRegular, size: 25)!),
+                                 AYGradientLabelConf.init(font: UIFont.init(name: kPingFangRegular, size: 25)!),
+                                 AYGradientLabelConf.init(font: UIFont.init(name: kPingFangRegular, size: 25)!)]
     private var labels: [UILabel] = []
     private var gradientLayers: [CAGradientLayer] = []
     

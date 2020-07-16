@@ -8,6 +8,6 @@
 
 import Foundation
 
-let pingFangRegular = "PingFangSC-Regular"
-let pingFangMedium = "PingFangSC-Medium"
-let pingFangBold = "PingFangSC-Semibold"
+public let kPingFangRegular = "PingFangSC-Regular"
+public let kPingFangMedium = "PingFangSC-Medium"
+public let kPingFangBold = "PingFangSC-Semibold"
