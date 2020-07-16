@@ -52,28 +52,34 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
         self.setupLabels()
     }
     
-    
-    
     public override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        
+        if gradientLayers.first?.frame.origin.y ?? 0 < 0 {
+            self.refresh()
+        }
+    }
+    
+    private func refresh() {
         var x: CGFloat = itemSpace
         for (index, gradientLayer) in gradientLayers.enumerated() {
-            let item = currentIndex == index ? selectedItems[index] : normalItems[index]
+            let showItem = currentIndex == index ? selectedItems[index] : normalItems[index]
             let selectedItem = selectedItems[index]
             let textMaxWidth = ((selectedItem.text ?? "") as NSString).boundingRect(with: CGSize.init(width: self.bounds.width, height: 20000),
                                                                         options: [.usesLineFragmentOrigin, .usesFontLeading],
                                                                         attributes: [NSAttributedString.Key.font : selectedItem.font],
                                                                         context: nil).width
-            let h = selectedItem.font.pointSize
+            let h = currentIndex == index ? selectedItem.font.pointSize : normalItems[index].font.pointSize
             let frame = CGRect.init(x: x,
                                     y: (self.bounds.height-h)/2,
                                     width: textMaxWidth,
                                     height: h)
             gradientLayer.frame = frame
-            self.refreshGradient(layer: gradientLayer, gradientParams: item.gradientParams!)
+            self.refreshGradient(layer: gradientLayer, gradientParams: showItem.gradientParams!)
             
             let label = labels[index]
             label.frame = gradientLayer.bounds
-            self.refreshLabel(label, item: item)
+            self.refreshLabel(label, item: showItem)
             
             x += textMaxWidth+itemSpace
         }
@@ -112,7 +118,7 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
                                                                         options: [.usesLineFragmentOrigin, .usesFontLeading],
                                                                         attributes: [NSAttributedString.Key.font : selectedItem.font],
                                                                         context: nil).width
-            let h = selectedItem.font.pointSize
+            let h = currentIndex == index ? selectedItem.font.pointSize : normalItems[index].font.pointSize
             let frame = CGRect.init(x: x,
                                     y: (self.bounds.height-h)/2,
                                     width: textMaxWidth,
@@ -173,8 +179,8 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
                 return
             }
             self.currentIndex = index
-            UIView.animate(withDuration: 0.35) {
-                self.setNeedsDisplay()
+            UIView.animate(withDuration: 0.5) {
+                self.refresh()
             }
         }
     }
@@ -188,7 +194,22 @@ extension AYGradientTXTHeader {
         }
         self.currentIndex = currentIndex
         UIView.animate(withDuration: 0.5) {
-            self.setNeedsDisplay()
+            self.refresh()
         }
+    }
+    
+    
+    /// 拖拽过程调用此方法，有过渡效果
+    /// - Parameters:
+    ///   - nextPage: 即将要展示的页面下标
+    ///   - scale: 拖拽的比例(0~1)
+    public func setNextPage(_ nextPage: Int, scale: CGFloat) {
+        guard nextPage != currentIndex else { return }
+        if nextPage > currentIndex {//查看右边页面
+            
+        }else{//查看左边页面
+            
+        }
+        
     }
 }

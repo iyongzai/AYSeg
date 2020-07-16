@@ -144,9 +144,9 @@ extension TestAYGradientSegViewVC: UI {
         
     }
     func addEvents() {
-        (segView.header as? AYSegDefaultHeader)?.handle = { [weak self] (index: Int) in
-            self?.segView.scrollToPage(index)
-        }
+//        (segView.header as? AYSegDefaultHeader)?.handle = { [weak self] (index: Int) in
+//            self?.segView.scrollToPage(index)
+//        }
     }
     
     

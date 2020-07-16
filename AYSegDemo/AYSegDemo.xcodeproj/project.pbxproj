@@ -26,6 +26,7 @@
 		C7A75ECA24BEE95900A22535 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A75EC924BEE95900A22535 /* Define.swift */; };
 		C7A75ECC24BF094100A22535 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A75ECB24BF094100A22535 /* Protocols.swift */; };
 		C7A75ECE24BF11D700A22535 /* TestAYGradientSegViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A75ECD24BF11D700A22535 /* TestAYGradientSegViewVC.swift */; };
+		C7A75ED224BFF42A00A22535 /* TestOtherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7A75ED124BFF42A00A22535 /* TestOtherVC.swift */; };
 		C7FDCBAA24B4A87D00A69843 /* AYGradientLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBA824B4A87D00A69843 /* AYGradientLabel.swift */; };
 		C7FDCBAB24B4A87D00A69843 /* AYGradientTitleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBA924B4A87D00A69843 /* AYGradientTitleButton.swift */; };
 		C7FDCBAD24B4A90300A69843 /* AYGradientLabel-Extension-String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FDCBAC24B4A90300A69843 /* AYGradientLabel-Extension-String.swift */; };
@@ -59,6 +60,7 @@
 		C7A75EC924BEE95900A22535 /* Define.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		C7A75ECB24BF094100A22535 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		C7A75ECD24BF11D700A22535 /* TestAYGradientSegViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestAYGradientSegViewVC.swift; sourceTree = "<group>"; };
+		C7A75ED124BFF42A00A22535 /* TestOtherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestOtherVC.swift; sourceTree = "<group>"; };
 		C7FDCBA824B4A87D00A69843 /* AYGradientLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYGradientLabel.swift; sourceTree = "<group>"; };
 		C7FDCBA924B4A87D00A69843 /* AYGradientTitleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AYGradientTitleButton.swift; sourceTree = "<group>"; };
 		C7FDCBAC24B4A90300A69843 /* AYGradientLabel-Extension-String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AYGradientLabel-Extension-String.swift"; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				2FF3F211214BCA870018521D /* ViewsControlViewController.swift */,
 				2FF3F213214BD5B20018521D /* MixViewController.swift */,
 				C7A75ECD24BF11D700A22535 /* TestAYGradientSegViewVC.swift */,
+				C7A75ED124BFF42A00A22535 /* TestOtherVC.swift */,
 				C70904CB233B63E500731266 /* NavVC.swift */,
 				2FF3F20D214B68BB0018521D /* BezierText.swift */,
 				2FF3F1E3214A44230018521D /* Main.storyboard */,
@@ -283,6 +286,7 @@
 				C7A75ECC24BF094100A22535 /* Protocols.swift in Sources */,
 				C7FDCBAD24B4A90300A69843 /* AYGradientLabel-Extension-String.swift in Sources */,
 				2FF3F206214B475F0018521D /* DemoView.swift in Sources */,
+				C7A75ED224BFF42A00A22535 /* TestOtherVC.swift in Sources */,
 				2FF3F1FB214A71190018521D /* SBDemoViewController.swift in Sources */,
 				2FF3F1F9214A70890018521D /* VCsControlViewController.swift in Sources */,
 				2FF3F20E214B68BB0018521D /* BezierText.swift in Sources */,

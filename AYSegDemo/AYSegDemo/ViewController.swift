@@ -19,7 +19,7 @@ extension UIColor {
 private let cellReuseIdentifier = "CellReuseIdentifier"
 class ViewController: UIViewController {
 
-    private var dataSource = ["拖控件方式示例", "所有分页用VC控制", "所有分页用View控制", "page中既有VC控制又有View控制", "TestAYGradientSegViewVC"]
+    private var dataSource = ["拖控件方式示例", "所有分页用VC控制", "所有分页用View控制", "page中既有VC控制又有View控制", "TestAYGradientSegViewVC", "TestOtherVC"]
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView.init(frame: self.view.bounds, style: .plain)
@@ -91,7 +91,8 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             self.show(MixViewController(), sender: nil)
         case 4:
             self.show(TestAYGradientSegViewVC(), sender: nil)
-
+        case 5:
+            self.show(TestOtherVC(), sender: nil)
         default:
             break
         }
