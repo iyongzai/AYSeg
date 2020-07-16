@@ -8,17 +8,17 @@
 
 import UIKit
 
-struct AYGradientLabelConf {
-    var text: String? = "法币账户"
+public struct AYGradientLabelConf {
+    var text: String? = "我的分类"
     var font = UIFont.init(name: pingFangRegular, size: 15)!
     
     var gradientParams: GradientParams? = GradientParams()
 }
 
 public class AYGradientTXTHeader: UIView, AYSegHeader {
+    public weak var segView: AYSegView?
     
-    
-    private(set) var currentIndex = 0
+    public private(set) var currentIndex = 0
     private var normalItems = [AYGradientLabelConf(), AYGradientLabelConf(), AYGradientLabelConf()]
     private var selectedItems = [AYGradientLabelConf.init(font: UIFont.init(name: pingFangRegular, size: 25)!),
                                  AYGradientLabelConf.init(font: UIFont.init(name: pingFangRegular, size: 25)!),
@@ -26,28 +26,30 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
     private var labels: [UILabel] = []
     private var gradientLayers: [CAGradientLayer] = []
     
-    var shouldShowBottomLine = true
+    public var shouldShowBottomLine = true
     weak private var bottomLine: CAGradientLayer?
-    var bottomLineGradientParams = GradientParams.init(startPoint: CGPoint.init(x: 0, y: 0.5), endPoint: CGPoint.init(x: 1, y: 0.5))
+    public var bottomLineGradientParams = GradientParams.init(startPoint: CGPoint.init(x: 0, y: 0.5), endPoint: CGPoint.init(x: 1, y: 0.5))
     
     
-    var itemSpace: CGFloat = 20
-    var minTouchHeight: CGFloat = 44
+    public var itemSpace: CGFloat = 20
+    public var minTouchHeight: CGFloat = 44
+    public var handle: AYSegHandle? = nil
+
     
     
-    override init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupLabels()
     }
     
-    init(items: [AYGradientLabelConf], selectedItems: [AYGradientLabelConf]) {
+    public init(items: [AYGradientLabelConf], selectedItems: [AYGradientLabelConf]) {
         super.init(frame: .zero)
         self.normalItems = items
         self.selectedItems = selectedItems
         self.setupLabels()
     }
     
-    required init?(coder: NSCoder) {
+    public required init?(coder: NSCoder) {
         super.init(coder: coder)
         self.setupLabels()
     }
@@ -70,8 +72,14 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
                                                                         attributes: [NSAttributedString.Key.font : selectedItem.font],
                                                                         context: nil).width
             let h = currentIndex == index ? selectedItem.font.pointSize : normalItems[index].font.pointSize
+            var y = (self.bounds.height-h)/2
+            if currentIndex != index {
+                // 垂直方向对齐处理(默认居中)
+                // 底部对齐(默认居中对齐，底部对齐的话，需要加上高度：(selectedItem.font.pointSize - normalItems[index].font.pointSize)/2)
+                y += (selectedItem.font.pointSize - normalItems[index].font.pointSize)/2
+            }
             let frame = CGRect.init(x: x,
-                                    y: (self.bounds.height-h)/2,
+                                    y: y,
                                     width: textMaxWidth,
                                     height: h)
             gradientLayer.frame = frame
@@ -119,8 +127,12 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
                                                                         attributes: [NSAttributedString.Key.font : selectedItem.font],
                                                                         context: nil).width
             let h = currentIndex == index ? selectedItem.font.pointSize : normalItems[index].font.pointSize
+            // 垂直方向对齐处理(默认居中)
+            var y = (self.bounds.height-h)/2
+            // 底部对齐(默认居中对齐，底部对齐的话，需要加上高度：(selectedItem.font.pointSize - normalItems[index].font.pointSize)/2)
+            y += (selectedItem.font.pointSize - normalItems[index].font.pointSize)/2
             let frame = CGRect.init(x: x,
-                                    y: (self.bounds.height-h)/2,
+                                    y: y,
                                     width: textMaxWidth,
                                     height: h)
             let gradientLayer = CAGradientLayer()
@@ -178,9 +190,11 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
             guard currentIndex != index else {
                 return
             }
-            self.currentIndex = index
-            UIView.animate(withDuration: 0.5) {
-                self.refresh()
+            self.handle?(index)
+            if self.handle == nil {
+                segView?.scrollToPage(index)
+            }else{
+                self.updateUIDidEndScrolling(currentIndex: index)
             }
         }
     }

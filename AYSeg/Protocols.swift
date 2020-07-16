@@ -62,4 +62,6 @@ import UIKit
 
 @objc public protocol AYSegHeader where Self: UIView {
     func updateUIDidEndScrolling(currentIndex: Int)
+    weak var segView: AYSegView? { set get }
+    var handle: AYSegHandle? { get }
 }

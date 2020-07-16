@@ -14,6 +14,8 @@ import SnapKit
 //MARK: 构造一个Bar作为header
 public typealias AYSegHandle = (_ index: Int) -> Void
 public class AYSegDefaultHeader: UIView, AYSegHeader {
+    public weak var segView: AYSegView?
+    
     
     public struct UIConfigure {
         
@@ -255,7 +257,11 @@ public class AYSegDefaultHeader: UIView, AYSegHeader {
     @objc public func buttonClicked(_ sender: UIButton) -> Void {
         print("buttonClicked")
         self.handle?(sender.tag)
-        self.updateUIDidEndScrolling(currentIndex: sender.tag)
+        if self.handle == nil {
+            segView?.scrollToPage(sender.tag)
+        }else{
+            self.updateUIDidEndScrolling(currentIndex: sender.tag)
+        }
     }
     public func setScrollStyle(BtnContentEdgeInsets: UIEdgeInsets = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 20)) {
         if self.viewWithTag(1314) is UIScrollView {

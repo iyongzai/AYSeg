@@ -258,6 +258,7 @@ extension AYSegView {
             }
             let header = AYSegDefaultHeader.init(frame: CGRect.zero, titles: newTitles, lineImageNames: [], handle: nil, buttonFont: UIFont.systemFont(ofSize: 14), buttonTitleNormalColor: normalColor, buttonTitleSelectedColor: selectedColor)
             header.backgroundColor = UIColor.clear
+            header.segView = self
             
             segHeaderBG.addSubview(header)
             header.snp.makeConstraints { (make) in
@@ -299,6 +300,7 @@ extension AYSegView {
         header.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
+        header.segView = self
         self.header = header
     }
     //MARK: - 修改所有分页高度
