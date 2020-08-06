@@ -12,7 +12,7 @@ extension UIControl.State: Hashable {
     
 }
 
-public class AYGradientTitleButton: UIButton {
+open class AYGradientTitleButton: UIButton {
     
     public var isGradientTitle = true {
         didSet {
