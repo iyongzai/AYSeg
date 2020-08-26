@@ -55,7 +55,7 @@ class TestAYGradientSegViewVC: UIViewController, AYSegViewDataSource, AYSegViewD
     }()
     
     private lazy var segHeader: AYGradientTXTHeader = {
-        let titles = ["法币账户", "币币账户", "合约账户"]
+        let titles = ["法币账户", "币币账户", "合约账户", "社区账户", "矿场账户"]
         let normalFont = UIFont.init(name: kPingFangRegular, size: 15)!
         let selectedFont = UIFont.init(name: kPingFangRegular, size: 25)!
         
@@ -97,9 +97,23 @@ class TestAYGradientSegViewVC: UIViewController, AYSegViewDataSource, AYSegViewD
         
         return page
     }()
+    private lazy var page4: VCViewController = {
+        let page = VCViewController()
+        page.showText = "VCViewController4"
+        page.btnTitle = "Test button 4"
+        
+        return page
+    }()
+    private lazy var page5: VCViewController = {
+        let page = VCViewController()
+        page.showText = "VCViewController5"
+        page.btnTitle = "Test button 5"
+        
+        return page
+    }()
     
     
-    lazy var pages: [AYSegPage] = [page1, page2, page3]
+    lazy var pages: [AYSegPage] = [page1, page2, page3, page4, page5]
     
     
     override func viewDidLoad() {

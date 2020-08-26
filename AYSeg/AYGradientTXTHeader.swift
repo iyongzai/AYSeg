@@ -43,24 +43,34 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
     public var itemSpace: CGFloat = 20
     public var minTouchHeight: CGFloat = 44
     public var handle: AYSegHandle? = nil
-
+    
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        self.addSubview(scrollView)
+        scrollView.snp.makeConstraints { (make) in
+            make.edges.equalToSuperview()
+        }
+        return scrollView
+    }()
     
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupLabels()
+        self.setupLabels(inView: scrollView)
     }
     
     public init(items: [AYGradientLabelConf], selectedItems: [AYGradientLabelConf]) {
         super.init(frame: .zero)
         self.normalItems = items
         self.selectedItems = selectedItems
-        self.setupLabels()
+        self.setupLabels(inView: scrollView)
     }
     
     public required init?(coder: NSCoder) {
         super.init(coder: coder)
-        self.setupLabels()
+        self.setupLabels(inView: scrollView)
     }
     
     public override func draw(_ rect: CGRect) {
@@ -121,7 +131,7 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
     }
     
     
-    private func setupLabels() {
+    private func setupLabels(inView: UIView) {
         labels.removeAll()
         gradientLayers.forEach { (elem) in
             elem.removeFromSuperlayer()
@@ -147,7 +157,7 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
             let gradientLayer = CAGradientLayer()
             gradientLayer.frame = frame
             self.refreshGradient(layer: gradientLayer, gradientParams: item.gradientParams!)
-            self.layer.addSublayer(gradientLayer)
+            inView.layer.addSublayer(gradientLayer)
             gradientLayers.append(gradientLayer)
             
             let label = UILabel.init(frame: gradientLayer.bounds)
@@ -159,16 +169,20 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
             
             x += textMaxWidth+itemSpace*2
         }
+        if let frame = gradientLayers.last?.frame {
+            scrollView.contentSize = CGSize.init(width: frame.origin.x+frame.width, height: self.frame.height)
+        }
+        
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(self.tapAction(_:)))
-        self.isUserInteractionEnabled = true
-        self.addGestureRecognizer(tap)
+        inView.isUserInteractionEnabled = true
+        inView.addGestureRecognizer(tap)
         
         let bottomLine = CAGradientLayer()
         bottomLine.frame = CGRect.init(x: gradientLayers[currentIndex].frame.origin.x,
                                        y: self.bounds.height-2,
                                        width: gradientLayers[currentIndex].frame.width,
                                        height: 2)
-        self.layer.addSublayer(bottomLine)
+        inView.layer.addSublayer(bottomLine)
         self.bottomLine = bottomLine
         self.refreshGradient(layer: bottomLine, gradientParams: bottomLineGradientParams)
     }
@@ -207,6 +221,17 @@ public class AYGradientTXTHeader: UIView, AYSegHeader {
             }
         }
     }
+    
+    private func refreshScrollViewContentOffset() {
+        //处理滑动
+        guard scrollView.contentSize.width > scrollView.frame.width else {
+            return
+        }
+        let maxOffsetX = scrollView.contentSize.width-self.frame.width
+        var nextOffsetX = (self.gradientLayers[self.currentIndex].frame.origin.x + self.gradientLayers[self.currentIndex].frame.width/2) - (self.frame.width/2)
+        nextOffsetX = min(max(nextOffsetX, 0), maxOffsetX)
+        scrollView.setContentOffset(CGPoint.init(x: nextOffsetX, y: 0), animated: true)
+    }
 }
 
 extension AYGradientTXTHeader {
@@ -218,6 +243,7 @@ extension AYGradientTXTHeader {
         self.currentIndex = currentIndex
         UIView.animate(withDuration: 0.5) {
             self.refresh()
+            self.refreshScrollViewContentOffset()
         }
     }
     
@@ -233,6 +259,6 @@ extension AYGradientTXTHeader {
         }else{//查看左边页面
             
         }
-        
+        self.refreshScrollViewContentOffset()
     }
 }
