@@ -277,7 +277,7 @@ public class AYSegDefaultHeader: UIView, AYSegHeader {
         }
         
         for (index, btn) in self.buttons.enumerated() {
-            btn.contentEdgeInsets = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 20)
+            btn.contentEdgeInsets = BtnContentEdgeInsets
             scrollView.addSubview(btn)
             btn.snp.removeConstraints()
             btn.snp.makeConstraints { (maker) in
