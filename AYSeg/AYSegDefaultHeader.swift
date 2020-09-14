@@ -223,17 +223,18 @@ public class AYSegDefaultHeader: UIView, AYSegHeader {
     }
     
     private func refreshSelectedUI() {
+        let selectedBtn = self.buttons[self.currentIndex]
         UIView.animate(withDuration: 0.35) {
-            let textWidth = self.buttons[self.currentIndex].currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedString.Key.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
+            let textWidth = selectedBtn.currentTitle?.boundingRect(with: CGSize.init(width: 300, height: 100), options: [], attributes: [NSAttributedString.Key.font : self.uiConfigure.buttonNormalFont], context: nil).size.width ?? 64
             self.bottomLine.snp.remakeConstraints { (make) in
                 make.bottom.equalTo(self)
                 make.size.equalTo(CGSize.init(width: textWidth, height: 2))
-                make.centerX.equalTo(self.buttons[self.currentIndex].snp.centerX)
+                make.centerX.equalTo(selectedBtn.snp.centerX).offset((selectedBtn.contentEdgeInsets.left-selectedBtn.contentEdgeInsets.right)/2)
             }
             self.selectedView.snp.remakeConstraints { (make) in
                 make.size.equalTo(CGSize.init(width: textWidth+35, height: 32))
-                make.centerX.equalTo(self.buttons[self.currentIndex].snp.centerX)
-                make.centerY.equalTo(self.buttons[self.currentIndex].snp.centerY)
+                make.centerX.equalTo(selectedBtn.snp.centerX).offset((selectedBtn.contentEdgeInsets.left-selectedBtn.contentEdgeInsets.right)/2)
+                make.centerY.equalTo(selectedBtn.snp.centerY)
             }
             self.layoutIfNeeded()
         }
@@ -245,7 +246,7 @@ public class AYSegDefaultHeader: UIView, AYSegHeader {
             return
         }
         let maxOffsetX = scrollView.contentSize.width-self.frame.width
-        var nextOffsetX = (self.buttons[self.currentIndex].frame.origin.x + self.buttons[self.currentIndex].frame.width/2) - (self.frame.width/2)
+        var nextOffsetX = (selectedBtn.frame.origin.x + selectedBtn.frame.width/2) - (self.frame.width/2)
         nextOffsetX = min(max(nextOffsetX, 0), maxOffsetX)
         scrollView.setContentOffset(CGPoint.init(x: nextOffsetX, y: 0), animated: true)
     }
@@ -265,6 +266,10 @@ public class AYSegDefaultHeader: UIView, AYSegHeader {
     }
     public func setScrollStyle(BtnContentEdgeInsets: UIEdgeInsets = UIEdgeInsets.init(top: 0, left: 20, bottom: 0, right: 20)) {
         if self.viewWithTag(1314) is UIScrollView {
+            self.buttons.forEach { (btn) in
+                btn.contentEdgeInsets = BtnContentEdgeInsets
+            }
+            self.refreshSelectedUI()
             return
         }
         let scrollView = UIScrollView()
