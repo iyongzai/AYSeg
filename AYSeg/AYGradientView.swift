@@ -41,6 +41,7 @@ public class AYGradientView: UIView, GradientUI {
     
     
     private func setup() {
+        self.isUserInteractionEnabled = false
         if gradientParams == nil {
             var gradientParams = GradientParams()
             gradientParams.startPoint = GradientDirection.left2Right.startPoint
